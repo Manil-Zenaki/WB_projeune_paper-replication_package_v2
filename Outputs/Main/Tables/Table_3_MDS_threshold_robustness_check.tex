@@ -1,0 +1,28 @@
+\begin{landscape}
+\begin{table}[]
+\caption{Robustness check for the classification of male-dominated sectors}
+\label{tab:MDS_reg_robustness}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+& \multicolumn{3}{c}{Male}        &  & \multicolumn{3}{c}{Female}     \\ \cmidrule(lr){2-4}  \cmidrule(l){6-8}
+VARIABLES  & T\_75    & T\_65     & T\_60    &  & T\_75    & T\_65    & T\_60    \\ \midrule
+Had a training in MDSs&   -0.009&    0.001&    0.001&&    0.208**&    0.186**&    0.186**\\
+&    0.018&    0.025&    0.025&&    0.041&    0.045&    0.045\\
+Worked in MDSs&   -0.070**&   -0.070**&   -0.070**&&    0.006&    0.006&    0.006\\
+&    0.012&    0.012&    0.012&&    0.027&    0.027&    0.027\\
+Proportion of contacts in the network working in MDSs&   -0.124***&   -0.124***&   -0.124***&&   -0.058&   -0.058&   -0.058\\
+&    0.016&    0.016&    0.016&&    0.060&    0.060&    0.060\\
+Has a role model working in MDSs&   -0.002&   -0.002&   -0.002&&    0.095**&    0.095**&    0.095**\\
+&    0.019&    0.019&    0.019&&    0.016&    0.016&    0.016\\
+\midrule
+\end{tabular}
+\begin{minipage}{21cm}
+\small{
+{\textit Notes:} \\
+Robust standard errors in parentheses. \\
+*** p\textless{}0.01, ** p\textless{}0.05, * p\textless{}0.1 \\
+This table shows the regression of training choices on different variables. The outcome is a dummy equal to one when the respondent chose the ICT or energy vocational training (MDSs). For each variable (i.e. row)/gender combination, a separate regression is done. In each column, we vary the threshold used to determine whether a sector is classified as male-dominated.  Our reference threshold is T\_75, i.e. 75\%. In other words, using the reference threshold, any sector that is at least 75\% male is considered male-dominated. Note that for each regression, we use cohort and city fixed effects. In addition, we include sociodemographic controls (respondent age, marital status, number of dependent children, proportion of female adults in the household, and household wealth index). Standard errors are clustered by zone. Due to a low number of clusters (6), we rely on wild bootstrap to compute p-values.
+}
+\end{minipage}
+\end{table}
+\end{landscape}
