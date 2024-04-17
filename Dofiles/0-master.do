@@ -46,16 +46,11 @@ global Graph_main "$Output/Main/Graphs"
 global Table_appendix "$Output/Appendix/Tables"
 global Graph_appendix "$Output/Appendix/Graphs"
 
+
+
+* PACKAGES 
+
 local packages = 0 // set to 1 to install required packages
-
-log using $maindir/logfile, replace
-
-set seed 1947 
-
-****************
-*** PACKAGES ***
-****************
-
 	if `packages' {
 		foreach egenmore  schemepack boottest listtab {
 			capture which `package'
@@ -64,28 +59,37 @@ set seed 1947
 	}
         
 		
+
+set scheme white_tableau
+
+log using $maindir/logfile, replace
+
+set seed 1947 
+
+
+		
 **********************************************************
 ***I. ENV WORKING AND TRAINING SECTORS CLASSIFICATION  ***
 **********************************************************
-run "$Dofiles_main_cleaning/1-ENV_appending.do"
-run "$Dofiles_main_cleaning/2-ENV_working_sector_classification.do"
-run "$Dofiles_main_cleaning/3-ENV_training_sector_classification.do"
+do "$Dofiles_main_cleaning/1-ENV_appending.do"
+do "$Dofiles_main_cleaning/2-ENV_working_sector_classification.do"
+do "$Dofiles_main_cleaning/3-ENV_training_sector_classification.do"
 
 ******************************************************
 ***II. PRO-JEUNES APPENDING, CLEANING AND LABELING ***
 ******************************************************
 
-run "$Dofiles_main_cleaning/4-appending.do"
-run "$Dofiles_main_cleaning/5-variables_creation.do"
-run "$Dofiles_main_cleaning/6-labeling.do"
-run "$Dofiles_main_cleaning/7-cleaning.do"
+do "$Dofiles_main_cleaning/4-appending.do"
+do "$Dofiles_main_cleaning/5-variables_creation.do"
+do "$Dofiles_main_cleaning/6-labeling.do"
+do "$Dofiles_main_cleaning/7-cleaning.do"
 
 
 
 **********************************
 ***III. DESCRIPTIVE STATISTICS  **
 **********************************
-run "$Dofiles_main_tables/8-Table_4_descriptive_stats.do"
+do "$Dofiles_main_tables/8-Table_4_descriptive_stats.do"
 
 
 ***********************
@@ -93,23 +97,23 @@ run "$Dofiles_main_tables/8-Table_4_descriptive_stats.do"
 ***********************
 
 * Tables 
-run "$Dofiles_main_tables/9-Table_1_male_dominated_working_sectors.do"
-run "$Dofiles_main_tables/10-Table_2_male_dominated_training_sectors.do"
-run "$Dofiles_main_tables/11-Table_3_MDS_robustness_check.do"
+do "$Dofiles_main_tables/9-Table_1_male_dominated_working_sectors.do"
+do "$Dofiles_main_tables/10-Table_2_male_dominated_training_sectors.do"
+do "$Dofiles_main_tables/11-Table_3_MDS_robustness_check.do"
 
 
-run "$Dofiles_main_tables/12-Table_5_6_all_variables_simultaneously.do"
+do "$Dofiles_main_tables/12-Table_5_6_all_variables_simultaneously.do"
 
 * Figures
-set scheme white_tableau
 
-run "$Dofiles_main_graphs/13-Figure_2_sectors_male_prop_and_earnings.do"
-run "$Dofiles_main_graphs/14-Figure_3_sociodemo.do"
-run "$Dofiles_main_graphs/15-Figure_4_educ.do"
-run "$Dofiles_main_graphs/16-Figure_5_experience.do"
-run "$Dofiles_main_graphs/17-Figure_6_network.do"
-run "$Dofiles_main_graphs/18-Figure_7_rolemodel.do"
-run "$Dofiles_main_graphs/19-Figure_8_gender_attitudes.do"
+
+do "$Dofiles_main_graphs/13-Figure_2_sectors_male_prop_and_earnings.do"
+do "$Dofiles_main_graphs/14-Figure_3_sociodemo.do"
+do "$Dofiles_main_graphs/15-Figure_4_educ.do"
+do "$Dofiles_main_graphs/16-Figure_5_experience.do"
+do "$Dofiles_main_graphs/17-Figure_6_network.do"
+do "$Dofiles_main_graphs/18-Figure_7_rolemodel.do"
+do "$Dofiles_main_graphs/19-Figure_8_gender_attitudes.do"
 
 
 
@@ -118,7 +122,7 @@ run "$Dofiles_main_graphs/19-Figure_8_gender_attitudes.do"
 **************
 
 * Figures
-run "$Dofiles_appendix_graphs/20-Appendix_Figure_A1.do"
+do "$Dofiles_appendix_graphs/20-Appendix_Figure_A1.do"
 
 
 log close
