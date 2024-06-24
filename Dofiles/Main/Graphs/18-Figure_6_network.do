@@ -1,16 +1,10 @@
 /****************************************************************************************
 *Project: 		    Pro-Jeune 
-*Purpose: 			EXPLORING RELATIONSHIP BETWEEN ROLE MODELS, SUPPORT AND TRAINING CHOICE
+*Purpose: 			EXPLORING RELATIONSHIP BETWEEN NETWORK AND TRAINING CHOICE
 *Authors: 		    Clara Delavallade, Manil Zenaki, Léa Rouanet, Estelle Koussoubé
 *Last Edit:		    06/10/2023
 *****************************************************************************************/
-
-local var_label "Attitude toward gender roles" "Agrees that women’s most important role is to cook and take care of her household "  "Agrees that household expenses are the responsibility of the husband"   ///
-"Agrees that by nature men and women have different abilities in differenta areas" /// 
- "Agrees that at work, men cope better" "with difficult conditions than women"  "Agency" "Attitude towards domestic violence"
-
-
- use "$Data_final/cohorts_1_2_clean.dta", clear
+use "$Data_final/cohorts_1_2_clean.dta", clear
 
 
 **************************************************
@@ -35,17 +29,21 @@ foreach x in ub lb p mde {
 local CI_95 = 0.025
 local CI_90 = 0.05
 
+* labels 
+local var_label "Has a professional Network" "Network size" ///
+"Proportion of Males in the network"
+
+
 ******************************************************************
 * B.  Generate required dataframe with cohort specific zscore  ***
 ******************************************************************
-
 
 local row = 1
 local x = 1 
 local w = 1
 
 
-foreach var in  ga_score_z ga_cook ga_expenses ga_abilities ga_conditions agency_general_z dm_attitude_score_z {
+foreach var in n5_any n5_size_z n5_male_prop_z  {
 	
 	local lab : word `w' of "`var_label'"
 	
@@ -97,11 +95,11 @@ replace lb_educ= _b[`var'] - invttail(e(df_r),`CI_90') * _se[`var'] in `row'
 replace ub_educ=  _b[`var'] + invttail(e(df_r),`CI_90') * _se[`var'] in `row'
 
 local row= `row' + 1 
-local x= `x' + 1	
+local x= `x' + 0.5	
 }
-local row= `row' + 1
-local x= `x' +  2
-local w = `w' +1 
+local row = `row' + 1
+local x = `x' +  1
+local w = `w' + 1 
 }
 
 
@@ -133,29 +131,36 @@ tab x
 tab coeff
 
 
+
+
 *v3 
+
 set scheme white_tableau
 twoway (scatter x1 coeff if gender_name=="Male", color(orange)) ///
 (scatter  x1 coeff if gender_name=="Female", color(ebblue)) ///
 (rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Male", horizontal lcolor(orange))  ///
 (rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Female", horizontal lcolor(ebblue) ///
 xline(0, lcolor(red) lstyle(line)) ///
-xlabel(none) xlab( "-0.3 -0.2  -0.1  0.1 0.2 0.3" , add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
+xlabel(none) xlab("-0.1 -0.05 0.05 0.1", add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
 yscale(lstyle(none) alt) ///
 graphregion(color(white)) ///
 ysize(5) xsize(9) ///
-title("Gender roles, agency and domestic violence", size(medium)) ///
+title("Network") ///
 ytitle("") xtitle("Regression coefficient") ///
-ylabel(25.5 "Attitude toward gender roles" 21.5 `" "Agrees that women’s most important role" "is to cook and take care of her household "'  17.5 `" "Agrees that household expenses" "are the responsibility of the husband" "'  ///
-13.25 `""Agrees that by nature men and women" "have different abilities in differenta areas" "'   9.5 `""Agrees that at work, men cope better " "with difficult conditions than women" "' 5.25 "Agency" ///
-1.5 "Attitude towards domestic violence", notick labsize(small) angle(horizontal)) ///
+ylabel(none, notick labsize(small) angle(horizontal) nogrid) ///
+ylabel(0.25 "Proportion of contacts working in Energy or ICT", add custom labcolor(white)) /// styling trick
+ylabel(5.25 "Has a professional Network" 3.25 "Network size" ///
+1.25 "Proportion of Males in the network" , add) ///
+yline(5.25 3.25 1.25 , lstyle(grid)) ///
 legend(label(1 "Male") label(2 "Female") label(3 "90% CI") label(4 "90% CI") /// 
 pos(6) row(1)) ///
 )
 
 
-graph save "$Graph_main/Figure_8_gender_attitudes.gph", replace
-graph export "$Graph_main/Figure_8_gender_attitudes.png", replace
-graph export "$Graph_main/Figure_8_gender_attitudes.svg", replace
+
+
+graph save "$Graph_main/Figure_6_network.gph", replace
+graph export "$Graph_main/Figure_6_network.png", replace
+graph export "$Graph_main/Figure_6_network.svg", replace
 
 

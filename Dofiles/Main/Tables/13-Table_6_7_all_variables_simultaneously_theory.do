@@ -9,7 +9,8 @@
 set cformat %9.3f 
 
 local gender_code  = 0 
-local t= 6 // for table name 
+local t= 7 // for table name 
+
 foreach gender_name in male female  {
 	use "$Data_final/cohorts_1_2_clean.dta", clear
 ******************************************
@@ -18,64 +19,53 @@ foreach gender_name in male female  {
 
 ** A.1 variables included in the analysis
 
-local sociodemo age_resp_z nkids_dependent_z hh_female_adult_prop_z wealthindex_hh_z
-
-local experience selfemployed_mds_not_eict selfemployed_energy_ict selfemployed_not_mds /// 
-employed_mds_not_eict employed_energy_ict employed_not_mds
-local network n5_size_z n5_male_prop_z n5_fam_prop_z n5_eict_prop_z
-local rm_support rm_male rm_female support_onlymale support_onlyfemale support_bothsex
-local educ educbis_z train_mds_not_eict train_energy_ict train_not_mds 
-local ga_agency_dv ga_cook ga_expenses agency_general_z dm_attitude_score_z
+local sociodemo age_resp_z nkids_dependent_z wealth_hh_rich
+local experience worked_paid30d_dummy worked_energy_ict 
+local network n5_size_z n5_male_prop_z 
+local rm_support rm_male rm_female support_bothsex
+local ga_agency_dv ga_score_z agency_general_z 
+local educ educbis_z train_energy_ict 
 
 
-local sections "sociodemo experience network rm_support ga_agency_dv educ"
+local sections "sociodemo educ experience network rm_support ga_agency_dv"
 local section_name "Sociodemographic characteristics" ///
-"Employment and revenues"  "Network"  /// 
+"Education and training" ///
+"Employment and revenues"  ///
+"Network"  /// 
 "Role model and support" ///
-"Gender roles , agency and attitudes toward domestic violence" ///
-"Education and training"
+"Gender attitudes, agency and attitudes toward domestic violence" ///
+
 
 
 
 ** A.2 Labels  (variable labels are sometimes too long and therefore they are truncated)
 local sociodemo_labels "Age of the respondent (z-score)" ///
 "Number of dependent children (z-score)"  ///
-"Proportion of adult women in the household (z-score)" ///
 "Household wealth index by cohort (zscore)"
 
-local work_labels  "Self-employed in MDSs (excluding EICT) in the last 30 days" ///
-"Self-employed in EICT in the last 30 days"  ///
-"Self-employed but not in MDSs in the last 30 days" ///
-"Wage-employed in MDSs (excluding EICT) in the last 30 days" ///
-"Wage-employed in EICT in the last 30 days" ///
-"Wage-employed but not in MDSs in the last 30 days" 
+local work_labels  "Had a paid job in the last 30d" ///
+"Worked in EICT in the last 30d"
 
 local network_labels "Network size (z-score)" ///
-"Proportion of male contacts in the network (z-score)" ///
-"Proportion of family members in the network (z-score)" ///
-"Proportion of contacts working in EICT in the network (z-score)" ///
+"Proportion of males in the network (z-score)" 
 
-local rm_support_labels "Has a male role model" ///
-"Has a female role model"  ///
-"Outside the family, can seek professional advice from men only" ///
-"Outside the family, can seek professional advice from women only" ///
-"Outside the family, can seek professional advice from men and women" ///
+local rm_support_labels "Male role model" ///
+"Female role model"  ///
+"Can seek professional advice from individuals outside the family" 
 
-local ga_agency_dm_labels "Agrees that women’s most important role is to cook and take care of her household " ///
-"Agrees that household expenses are the responsibility of the husband" ///
-"Agency (z-score)" ///
-"Attitudes towards domestic violence (z-score)"
+local ga_agency_dm_labels "Gender attitudes (z-score)" ///
+"Agency: input in productive decisions (z-score)" 
 
-local educ_labels "Education (z-score)"  ///
-"Had training in MDS (excluding EICT)"  ///
-"Had a training in EICT " ///
-"Had training but not in MDS"
+
+local educ_labels "Years of education (z-score)"  ///
+"Training in EICT" 
 
 
 
-local labels_by_section "sociodemo_labels  work_labels  network_labels  rm_support_labels  ga_agency_dm_labels educ_labels "
 
-local sections "sociodemo experience network rm_support ga_agency_dv educ"
+local labels_by_section "sociodemo_labels educ_labels work_labels  network_labels  rm_support_labels  ga_agency_dm_labels"
+
+local sections "sociodemo educ experience network rm_support ga_agency_dv"
 
 ** A.3 Label's column 
 gen flag = 0
@@ -224,14 +214,14 @@ local end_table ///
 "{\textit Notes:} \\" ///
 "Robust standard errors in parentheses. \\" ///
 "*** p\textless{}0.01, ** p\textless{}0.05, * p\textless{}0.1 . \\" ///
-"Standard errors are clustered by zone. Due to a low number of clusters (6), we rely on wild bootstrap to compute p-values. For each column, we include sociodemographic controls (respondent age, marital status, number of dependent children, proportion of female adults in the household, household wealth index). The acronym EICT stands for Energy or Information Communication and Technology." ///
+"Standard errors are clustered by zone. Due to a low number of clusters (6), we rely on wild bootstrap to compute p-values. For each column, we include cohort and city fixed-effects. The acronym EICT stands for Energy or Information Communication and Technology." ///
 "}" ///
 "\end{minipage} \\* \bottomrule" ///
 "\end{longtable}" ///
 "\end{landscape}"
 
 listtab label_col  coeff_1 coeff_2 coeff_3 coeff_4 coeff_5 coeff_6 ///
-using  "$Table_main/Table_`t'_drivers_`gender_name'.tex" ,  ///
+using  "$Table_main/Table_`t'_drivers_`gender_name'_theory.tex" ,  ///
 rs(tabular)  footlines("`end_table'") headlines("`start_table'") replace
 
 

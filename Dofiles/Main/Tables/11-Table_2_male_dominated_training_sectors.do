@@ -1,7 +1,7 @@
 /*******************************************************************************************
 *Project: 		    Pro-Jeune 
-*Purpose: 			Table 1 : Male Dominated  Working Sectors and Median earnings 
-USING THE ENV 2015 DATASETS TO DETERMINE WHICH PRO-JEUNES WORKING SECTORS ARE MALE DOMINATED 
+*Purpose: 			Table 2 : Male dominated  training sectors and median earnings 
+USING THE ENV 2015 DATASETS TO DETERMINE WHICH TRAINING SECTORS ARE MALE DOMINATED 
  AND  THE MEDIAN EARNING IN EACH SECTOR
  
 *Authors: 		    Clara Delavallade, Manil Zenaki, Léa Rouanet, Estelle Koussoubé
@@ -11,18 +11,24 @@ USING THE ENV 2015 DATASETS TO DETERMINE WHICH PRO-JEUNES WORKING SECTORS ARE MA
 
 
 *************************
-* A. Latex Table 1 ******
+* A. Latex Table 2 ******
 *************************
-
 set seed 1947
-use "$Data_final/projeune_working_sector_classification.dta", clear
+use "$Data_final/projeune_training_sector_classification.dta", clear
+
+gen mds_label = ""
+replace mds_label = "MDS"  if mds_75 == 1
+replace mds_label = "Not MDS"  if mds_75 != 1
+
+replace male_proportion= round(male_proportion *100 , 0.01)
+gsort - male_proportion -earnings -act_projeune_number
 
 local start_table "{\small\tabcolsep=3pt  % hold it local" ///
 "\begin{longtable}{m{9cm}ccc}" ///
-"\caption{Male dominated working sectors}" ///
-"\label{tab:MDS_table}\\" ///
+"\caption{Male dominated training sectors}" ///
+"\label{tab:MDS_training_classification}\\" ///
 "\toprule" ///
-"\textbf{Activity/Sector} &" ///
+"\textbf{Training sector} &" ///
 "\textbf{Category} &" ///
 "\textbf{Male percentage} &" ///
 "\textbf{Median earning PPP} \\* \midrule" ///
@@ -46,14 +52,14 @@ local end_table  "\midrule" ///
 "\small{" /// 
 "{\textit Notes:} \\"  /// 
 "*Not MDS   by default. \\" ///
-"We consider that electrical, mining/Oil workers and refrigeration" /// 
-"and air conditioning belong to  the energy sector. Computer and electronics" /// 
-"were assigned to ICT." /// 
+"\texttt{[ICT]} and \texttt{[Energy]} shows sectors that were assigned respectively to the ICT and Energy sectors." /// 
+"The sector classification is based on data from ENV 2015. This database provides the respondent's main activity and the corresponding sector of activity.  As the Pro-Jeune survey has its own classification of training sectors (which differs from the ENV work sector classification as well as from the Pro-Jeune work sectors), we match the ENV classification to that of the Pro-Jeune survey.  " ///
 "}" /// 
 "\end{minipage} \\* \bottomrule" /// 
 "\end{longtable}" /// 
 "}"
 
-listtab act_label mds_label male_proportion earnings using "$Table_main/Table_1_MDS_work.tex",  ///
+listtab act_label mds_label male_proportion earnings using "$Table_main/Table_2_MDS_training.tex",  ///
  rs(tabular) missnum("NA") footlines("`end_table'") headlines("`start_table'") replace
  
+

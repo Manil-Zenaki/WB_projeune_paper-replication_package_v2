@@ -14,11 +14,11 @@ use "$Data_intermediate/cohorts_1_2_raw.dta", clear
 drop hh_rel hh_married hh_laborforce hh_sex hh_size hh_age nbr_adults_hh ///
 nbr_adults_hh nbr_children_hh hh_size_female marital_status educ network_size 
 
-quietly destring cohort zone se2_new1 age id_age_2 cf9 cf4 id5_gender gend_r cf10b cf11b ///
+/*quietly destring cohort zone se2_new1 age id_age_2 cf9 cf4 id5_gender gend_r cf10b cf11b ///
 cf10a cf10b cf11a cf11b ag8_1_mins ag9_2_mins ag10_1_mins ag11_2_mins  /// 
 r11_other ec3-ec7 ec9 cr3_montant_* cr4_interet_* cr12_montant_* ///
 cr13_interet_*  ep*a ep*b ep*c ep10 ar_a8_* ar_na8_*  ar_s8_* bm*c ///
-ec11_total_savings em2_2 em3_3 em_a em_na se3_kids as10 id, replace
+ec11_total_savings em2_2 em3_3 em_a em_na se3_kids as10 id, replace*/
 
 egen strata_cohort_zone = group(cohort zone)
 
@@ -27,6 +27,7 @@ egen strata_cohort_zone = group(cohort zone)
 ****************************
 
 ** A.1 Respondent **
+
 
 gen city = id8_ville 
 replace city = 0  if city==2 
@@ -205,10 +206,6 @@ local unclassified_numbers= "$unclassified_working_numbers"
 
 gen asr_value="" 
 
-gen employed_paid6m_dummy = em2b
-replace employed_paid6m_dummy = 0 if em1b == 0 
-
-
 gen employed6m_dummy = . 
 
 
@@ -222,16 +219,11 @@ replace employed30d_dummy=1 if  !inlist(em2_2,.,0 ) | !inlist(em3_3,.,0 ) // num
 
 
 
-foreach var of varlist asr_value_* {
-   tostring `var' , gen(`var'_str)
-}
 
+forval i=1/5 {
+replace asr_value= asr_value + string(asr_value_`i') + " " if `i'<6  & asr_value_`i'!=.
 
-forval i=1/6 {
-capture replace asr_value= asr_value + asr_value_`i'_str + " " if `i'<6 & ///
-!strpos(asr_value,asr_value_`i'_str) 
-capture replace asr_value= asr_value + asr_value_`i'_str if `i'==6  & ///
-!strpos(asr_value,asr_value_`i'_str) 
+replace asr_value= asr_value + string(asr_value_`i') if `i'==6  & asr_value_`i'!=.
 }
 
 
@@ -298,28 +290,15 @@ replace  employed_not_mds = 0  if employed30d_dummy==0 | employed_mds ==1
 ** D.2 Self-employed / work for the household in an MDS during the last 30 days **
 
 gen anr_value=""
-
-foreach var of varlist anr_value_* {
-    tostring `var', gen(`var'_str)
-}
-
-forval i=1/8 {
-capture replace anr_value= anr_value + anr_value_`i'_str + " " if `i'<8 & ///
-!strpos(anr_value,anr_value_`i'_str) 
-capture replace anr_value= anr_value + anr_value_`i'_str if `i'==8  & ///
-!strpos(anr_value, anr_value_`i'_str) 
-}
-
-foreach var of varlist ara_value_* {
-    tostring `var', gen(`var'_str)
+forval i=1/4 {
+replace anr_value= anr_value + string(anr_value_`i') + " " if anr_value_`i'!=.
+replace anr_value= anr_value + string(anr_value_`i') if anr_value_`i'!=.
 }
 
 gen ara_value=""
 forval i=1/3 {
-capture replace ara_value= ara_value + ara_value_`i'_str + " " if `i'<3 & ///
-!strpos(ara_value,ara_value_`i'_str) 
-capture replace ara_value= ara_value + ara_value_`i'_str if `i'==3  & ///
-!strpos(ara_value,ara_value_`i'_str) 
+replace ara_value= ara_value + string(ara_value_`i') + " " if ara_value_`i'!=.
+replace ara_value= ara_value + string(ara_value_`i') if ara_value_`i'!=.
 }
 
 gen selfemployed6m_dummy=. 
@@ -332,8 +311,8 @@ replace selfemployed30d_dummy =0 if selfemployed6m_dummy==0 |  /// nothing durin
 replace selfemployed30d_dummy= 1 if  !inlist(em_a,.,0) | !inlist(em_na,.,0)
 
 gen list_activities = ""
-replace list_activities=   anr_value + " " + ara_value if anr_value !="" & ara_value!=""
-replace list_activities=   anr_value if anr_value !="" & ara_value==""
+replace list_activities=   anr_value + " " + ara_value if anr_value != "" & ara_value!= ""
+replace list_activities=   anr_value if anr_value != "" & ara_value== ""
 replace list_activities=   ara_value if anr_value =="" & ara_value!=""
 
 
@@ -434,11 +413,13 @@ gen train_dummy =  ed9_formationpro
 
 
 forval i=1/29 {
- replace train_field= train_field +  "`i'" + " " if `i'<29 & ///
+replace train_field= train_field +  "`i'" + " " if `i'<29 & ///
 ed13_domaine_`i'==1 & cohort > 1 
- replace train_field= train_field + "`i'"   if `i'==29 & ///
+replace train_field= train_field + "`i'"   if `i'==29 & ///
 ed13_domaine_`i'==1 & cohort > 1
 }
+
+
 
 foreach x in mds fds energy ict {
 gen train_`x'= .
@@ -954,13 +935,6 @@ replace missing_count= missing_count +1 if `var'==. | `var'<0
 replace revenues_total=. if missing_count>=var_count
 replace revenues_total = 0 if worked30d_dummy ==0
 
-gen worked_paid30d_dummy = .
-
-replace worked_paid30d_dummy = 0 if worked30d_dummy == 0 |  revenues_total == 0 
-replace worked_paid30d_dummy = 1 if worked30d_dummy == 1 &  !inlist(revenues_total, ., 0)
-
-
-
 drop missing_count 
 
 egen revenues_total_q = xtile(revenues_total), by(cohort) nq(5)
@@ -1142,7 +1116,7 @@ replace train_choice_tic = 0 if !inlist(train_choice, 5, . )
 
 gen train_choice_vt= .
 replace train_choice_vt = 1 if inlist(train_choice, 1, 2, 5)
-replace train_choice_vt = 0 if !inlist(train_choice, 1, 2, 5,.)
+replace train_choice_vt = 1 if !inlist(train_choice, 1, 2, 5,.)
 
 
  
@@ -1178,4 +1152,5 @@ gen risk_aversion_score = 0
 foreach var in pr1 pr2 pr3 {
 	replace risk_aversion_score = risk_aversion_score + 1 if `var'==2
 }
+
 

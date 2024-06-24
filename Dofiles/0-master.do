@@ -46,6 +46,9 @@ global Graph_main "$Output/Main/Graphs"
 global Table_appendix "$Output/Appendix/Tables"
 global Graph_appendix "$Output/Appendix/Graphs"
 
+global Table_slides "$Output/Slides/Tables"
+global Graph_slides "$Output/Slides/Graphs"
+
 
 
 * PACKAGES 
@@ -62,7 +65,7 @@ local packages = 0 // set to 1 to install required packages
 
 set scheme white_tableau
 
-log using $maindir/logfile, replace
+*log using $maindir/logfile, replace
 
 set seed 1947 
 
@@ -86,10 +89,11 @@ do "$Dofiles_main_cleaning/7-cleaning.do"
 
 
 
-**********************************
-***III. DESCRIPTIVE STATISTICS  **
-**********************************
-do "$Dofiles_main_tables/8-Table_4_descriptive_stats.do"
+**********************************************
+***III. VARIABLES & DESCRIPTIVE STATISTICS  **
+**********************************************
+do "$Dofiles_main_tables/8-Table_4_variables_in_analysis.do"
+do "$Dofiles_main_tables/9-Table_5_descriptive_stats.do"
 
 
 ***********************
@@ -97,23 +101,24 @@ do "$Dofiles_main_tables/8-Table_4_descriptive_stats.do"
 ***********************
 
 * Tables 
-do "$Dofiles_main_tables/9-Table_1_male_dominated_working_sectors.do"
-do "$Dofiles_main_tables/10-Table_2_male_dominated_training_sectors.do"
-do "$Dofiles_main_tables/11-Table_3_MDS_robustness_check.do"
+do "$Dofiles_main_tables/10-Table_1_male_dominated_working_sectors.do"
+do "$Dofiles_main_tables/11-Table_2_male_dominated_training_sectors.do"
+do "$Dofiles_main_tables/12-Table_3_MDS_robustness_check.do"
 
 
-do "$Dofiles_main_tables/12-Table_5_6_all_variables_simultaneously.do"
+do "$Dofiles_main_tables/13-Table_6_7_all_variables_simultaneously_theory.do"
+
 
 * Figures
 
 
-do "$Dofiles_main_graphs/13-Figure_2_sectors_male_prop_and_earnings.do"
-do "$Dofiles_main_graphs/14-Figure_3_sociodemo.do"
-do "$Dofiles_main_graphs/15-Figure_4_educ.do"
-do "$Dofiles_main_graphs/16-Figure_5_experience.do"
-do "$Dofiles_main_graphs/17-Figure_6_network.do"
-do "$Dofiles_main_graphs/18-Figure_7_rolemodel.do"
-do "$Dofiles_main_graphs/19-Figure_8_gender_attitudes.do"
+do "$Dofiles_main_graphs/14-Figure_2_sectors_male_prop_and_earnings.do"
+do "$Dofiles_main_graphs/15-Figure_3_sociodemo.do"
+do "$Dofiles_main_graphs/16-Figure_4_educ.do"
+do "$Dofiles_main_graphs/17-Figure_5_experience.do"
+do "$Dofiles_main_graphs/18-Figure_6_network.do"
+do "$Dofiles_main_graphs/19-Figure_7_rolemodel.do"
+do "$Dofiles_main_graphs/20-Figure_8_gender_attitudes.do"
 
 
 
@@ -122,7 +127,7 @@ do "$Dofiles_main_graphs/19-Figure_8_gender_attitudes.do"
 **************
 
 * Figures
-do "$Dofiles_appendix_graphs/20-Appendix_Figure_A1.do"
-
+do "$Dofiles_appendix_graphs/21-Appendix_Figure_A1.do"
+do "$Dofiles_appendix_tables/Variable_selection.do"
 
 log close

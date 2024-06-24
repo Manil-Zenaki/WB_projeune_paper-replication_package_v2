@@ -5,21 +5,12 @@
 *Last Edit:		    06/10/2023
 *****************************************************************************************/
 
-
-
-local var_label  "Age" "Number of children" "Proportion of adult women in the household" ///
-  "Top 40% of household wealth"
-
-
 use "$Data_final/cohorts_1_2_clean.dta", clear
 
 
-
-
-
-**************************************************************
-* A.  Transform any variable that need to be transformed   ***
-**************************************************************
+**************************************************
+* A.  Generate variables needed for the table  ***
+**************************************************
 local gender_name "Male Female"
 gen varname= ""
 gen gender_name= ""
@@ -44,14 +35,17 @@ local CI_90 = 0.05
 ******************************************************************
 
 
-local row = 1
-local x = 1
-local w = 1
+local row= 1
+local x= 1  
+local w = 1 
 
+local var_label "Wage-employed in the last 6m" "Self-employed in the last 6m" ///
+"Worked for pay in the last 30d" "Worked in MDSs (excluding EICT) in the last 30d" ///
+ "Worked in EICT in the last 30d" "Revenues earned in the last 30d"
 
-foreach var in age_resp_z nkids_dependent_z hh_female_adult_prop_z wealth_hh_rich {
-	
-local lab : word `w' of "`var_label'"
+foreach var in employed6m_dummy selfemployed6m_dummy worked_paid30d_dummy ///
+ worked_mds_not_eict worked_energy_ict revenues_total_z {
+	local lab : word `w' of "`var_label'"
 	
 forval i=0/1{
 local j= `i' +1 
@@ -105,7 +99,7 @@ local x= `x' + 0.5
 }
 local row= `row' + 1
 local x= `x' +  1
-local w = `w' + 1 
+local w= `w' + 1
 }
 
 
@@ -135,31 +129,39 @@ replace x1=  x[`i'] in `j'
 tab x
 tab coeff
 
+gen min_x = -0.8
+gen max_x = 0.8
 
 
 
-*v3 
 set scheme white_tableau
 twoway (scatter x1 coeff if gender_name=="Male", color(orange)) ///
 (scatter  x1 coeff if gender_name=="Female", color(ebblue)) ///
 (rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Male", horizontal lcolor(orange))  ///
-(rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Female", horizontal lcolor(ebblue) ///
-yscale(lstyle(none) alt) ///
+(rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Female" ///
+& lb_bootstrapped >= min_x  & ub_bootstrapped <= max_x, horizontal lcolor(ebblue)) ///
+(pcbarrow min_x x1 max_x x1 if gender_name=="Female" ///
+& lb_bootstrapped < min_x  | ub_bootstrapped > max_x, horizontal lcolor(ebblue) mlcolor(ebblue) ///
 xline(0, lcolor(red) lstyle(line)) ///
-xlabel(none) xlab("-0.2 -0.1  0.1 0.2", add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
+xlabel(none) xlab(-0.5 -0.4 -0.3 -0.2 -0.1 0.1 0.2 0.3 0.4 0.5, add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
+yscale(lstyle(none) alt) ///
 graphregion(color(white)) ///
-ysize(5) xsize(9) ///
-title(" Sociodemographic characteristics") ///
+title("Employment and revenues") ///
 ytitle("") xtitle("Regression coefficient") ///
-ylabel(none, notick labsize(small) angle(horizontal) nogrid) ///
-ylabel(0.75 "Agrees that women’s most important role", add custom labcolor(white) ) ///
-ylabel(7.25 "Age" 5.25 "Number of children" 3.25 "Proportion of adult women in the household" 1.25 "Top 40% of household wealth", add) ///
-yline(7.25 5.25 3.25 1.25 , lstyle(grid)) ///
-legend(label(1 "Male") label(2 "Female") label(3 "90% CI") label(4 "90% CI") /// 
+ylabel(11.25 "Wage-employed in the last 6m" 9.25 "Self-employed in the last 6m" ///
+7.25 "Had a paid work in the last 30d" ///
+5.25 `" "Worked in MDSs (excluding EICT)" "in the last 30d" "' ///
+3.25 "Worked in EICT in the last 30d" ///
+1.25 "Revenues earned in the last 30d", notick labsize(small) angle(horizontal)) ///
+legend( order (1 "Male" 2 "Female" 3 "90% CI" 4 "90% CI") /// 
 pos(6) row(1)) ///
 )
 
 
-graph save "$Graph_main/Figure_3_sociodemo.gph", replace
-graph export "$Graph_main/Figure_3_sociodemo.png", replace
-graph export "$Graph_main/Figure_3_sociodemo.svg", replace
+
+graph save "$Graph_main/Figure_5_experience.gph", replace
+graph export "$Graph_main/Figure_5_experience.png", replace
+graph export "$Graph_main/Figure_5_experience.svg", replace
+
+
+

@@ -1,0 +1,60 @@
+\begin{longtable}{m{9cm}ccc}
+\caption{Variable Selection}
+\label{tab:appendix_variable_selection}\\
+\toprule
+VARIABLES & Theory & LASSO MALE & LASSO FEMALE \\*
+\midrule
+\endfirsthead
+%
+\multicolumn{1}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+\toprule
+VARIABLES & Theory & LASSO MALE & LASSO FEMALE \\*
+\midrule
+\endhead
+%
+\bottomrule
+\endfoot
+%
+\endlastfoot
+%
+\textbf{Sociodemographic characteristics}&&&\\
+Age of the respondent (z-score)&1&0&0\\
+Number of dependent children (z-score)&1&0&0\\
+Household wealth index by cohort (zscore)&0&0&0\\
+\textbf{Education and training}&&&\\
+Years of education (z-score)&1&1&1\\
+Any training&0&0&0\\
+Training in EICT&1&0&1\\
+\textbf{Employment and revenues}&&&\\
+Wage-employed in the last 6m&0&1&1\\
+Self-employed in the last 6m&0&1&1\\
+Had a paid work in the last 30d&1&0&0\\
+Worked in MDSs (excluding EICT) in the last 30d&0&1&1\\
+Worked in EICT in the last 30d&1&0&0\\
+Revenues earned in the last 30d (z-score)&0&1&0\\
+\textbf{Network}&&&\\
+Has a professional Network&0&0&0\\
+Network size (z-score)&1&0&0\\
+Proportion of Males in the network (z-score)&1&0&0\\
+\textbf{Role model and support}&&&\\
+Male role model&1&0&1\\
+Female role model&1&0&1\\
+Role model in EICT&0&0&0\\
+Can seek professional advice from individuals outside the family&1&0&0\\
+\textbf{Gender roles , agency and attitudes toward domestic violence}&&&\\
+Gender attitudes (z-score)&1&0&0\\
+Agrees that women’s most important role is to cook and take care of her household &0&0&0\\
+Agrees that household expenses are the responsibility of the husband&0&0&0\\
+Agrees that by nature men and women have different abilities in differenta areas&0&0&0\\
+Agrees that at work, men cope better with difficult conditions than women&0&0&0\\
+Agency: input in productive decisions&1&0&0\\
+Attitudes towards domestic violence (z-score)&0&0&0\\
+\midrule
+\begin{minipage}{13cm}
+\small{
+{\textit Notes:} \\
+This table shows the variables selected for table \ref{tab:results_table_female} and table \ref{tab:results_table_male} (column 1), as well as the variables selected by a LASSO when the sample is restricted to men (column 2) and then women (column 3). \\
+}
+\end{minipage} \\* \bottomrule
+\end{longtable}

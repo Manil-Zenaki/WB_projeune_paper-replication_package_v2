@@ -15,6 +15,7 @@ set sformat %8.2fc
 
 
 ** A.1 columns 
+gen var = ""
 gen label_col= ""
 
 foreach district in bassam abidjan all {
@@ -29,35 +30,37 @@ gen `x'_`district'_mean = .
 
 ** A.2 variables included in descriptive statistics 
 
-local sociodemo age_resp married kids_dummy nkids_dependent ///
-hh_female_adult_prop wealth_hh_rich // sociodemo
-
-local educ educbis  train_dummy train_mds_not_eict train_energy_ict train_choice_vt  ///
-train_choice_mds // educ  and training 
-
-local work worked6m_dummy employed30d_dummy selfemployed30d_dummy worked_mds_not_eict /// 
-worked_energy_ict revenues_total  // employment and earnings 
-
-local network n5_any n5_size n5_male_dummy n5_male_prop n5_fam_prop n5_fr_prop ///
-n5_mds_not_eict_prop n5_eict_prop  // network 
-
-local rm_support rm_dummy rm_male rm_female rm_mds_not_eict rm_energy_ict ///
-support support_onlymale support_onlyfemale support_bothsex // role models and support
-
-local ga_agency_dm ga_score_p ga_cook ga_expenses ga_abilities ga_conditions ///
-agency_general_p agencycom_general_p dm_attitude_p  // gender attitudes, agency, domestic violence
+local pj_training_choice  train_choice_salaried train_choice_selfemp ///
+train_choice_vt train_choice_energy train_choice_tic train_choice_lipton
 
 
-local continuous age_resp nkids_dependent hh_female_adult_prop educbis  ///
-cognitive_score_p revenues_total ///
-n5_size n5_male_prop n5_fam_prop n5_fr_prop n5_mds_not_eict_prop n5_eict_prop  ///
-ga_score_p gency_general_p agencycom_general_p dm_attitude_p 
-local all_vars `sociodemo' `educ' `work' `network' `rm_support' `ga_agency_dm'  
+local sociodemo age_resp  nkids_dependent wealth_hh_rich // sociodemo
+
+local educ educbis  train_dummy  train_energy_ict train_choice_mds // educ  and past training 
+
+local work  employed6m_dummy selfemployed6m_dummy worked_paid30d_dummy ///
+ worked_mds_not_eict worked_energy_ict revenues_total // employment and earnings 
+
+local network n5_any n5_size n5_male_prop // network 
+
+local rm_support rm_male rm_female rm_energy_ict support  // role models and support
+
+local ga_agency_dm ga_score_p ga_cook ga_expenses ga_abilities ga_conditions agency_general_p dm_attitude_p  // gender attitudes, agency, domestic violence
+
+
+local continuous age_resp  nkids_dependent  ///
+educbis ///
+revenues_total ///
+n5_size n5_male_prop ///
+ga_score_p agency_general_p dm_attitude_p
+
+
+local all_vars `pj_training_choice' `sociodemo' `educ' `work' `network' `rm_support' `ga_agency_dm'  
 
 
 ** A.3 Sections:  each variable belong to a section
-local section "sociodemo educ work network rm_support ga_agency_dm"
-local section_name "Sociodemographics" "Education and training" ///
+local section "pj_training_choice sociodemo educ work network rm_support ga_agency_dm"
+local section_name "PRO-Jeunes Training choice" "Sociodemographics" "Education and training" ///
 "Employment and earnings" "Network size and characteristics" ///
 "Role Model and support outside the family" "Gender attitudes, agency and domestic violence"
 
@@ -71,57 +74,52 @@ local section_count = `section_count' - 1
 local condition "if city==0" "if city==1" "if inlist(city,0,1)"
 
 ** A.5 Labels  (variable labels are sometimes too long and therefore they are truncated)
+
+local pj_training_choice_labels "Wage-employement track" ///
+"Generalist entrepreneurial track" ///
+"Vocational training track" ///
+"Vocational training in energy" ///
+"Vocational training in information and communication technologies (ICT)" ///
+"Vocational training in trade"
+
+
 local sociodemo_labels "Age of the respondent" ///
-"Married, in concubinage or enganged"  ///
-"Has at least one dependent child" ///
 "Number of dependent children"  ///
-"Proportion of adult women in the household" ///
 "Household is in the top 2 wealth quintile (by cohort)"
 
-local educ_labels "Years of education" "Had a professional training"  ///
-"Had a training in MDSs (excluding EICT)"  ///
-"Had a training in EICT " ///
-"Want to be trained through vocational training" ///
-"Want to be trained in EICT"
+local educ_labels "Years of education" ///
+"Any training"  ///
+"Training in EICT"
 
-local work_labels  "Worked in the last 6 months" ///
-"Wage-employed in the last 30 days"  ///
-"Self-employed in the last 30 days" ///
-"Worked in MDSs (excluding EICT) in the last 30 days" ///
-"Worked in EICT in the last 30 days" ///
-"Total revenue earned during the last 30 days" 
 
-local network_labels "Has at least one professional contact in the network" ///
+local work_labels  "Wage-employed in the last 6m" ///
+"Self-employed in the last 6m" ///
+"Had a paid work in the last 30d" ///
+"Worked in MDSs (excluding EICT) in the last 30d" ///
+"Worked in EICT in the last 30d" ///
+"Revenues earned in the last 30d (USD PPP)"
+
+local network_labels "Has a professional Network" ///
 "Network size" ///
-"Has at least one male contact in the network" ///
-"Proportion of males in the network" ///
-"Proportion of family members in the network" ///
-"Proportion of friends in the network" ///
-"Proportion of individuals working in MDSs (excluding EICT) in the network" ///
-"Proportion of individuals working in EICT in the network"
+"Proportion of Males in the network"
 
 
-local rm_support_labels "Has a role model" ///
-"Has a male role model"  ///
-"Has a female role model" ///
-"Has a role model working in MDSs (excluding EICT)" ///
-"Has a role model working in the EICT sectors " ///
-"Can ask for professional advice from people around him/her (outside the family)" ///
-"Can ask for professional advice only from men around him/her" ///
-"Can ask for professional advice only from women around him/her" ///
-"Can ask for professional advice from both men and women around him/her"
+local rm_support_labels "Male role model"  ///
+"Female role model" ///
+"Role model in EICT" ///
+"Can seek professional advice from individuals outside the family"
 
 
-local ga_agency_dm_labels "Attitudes toward gender roles" ///
-"Agrees that women’s most important role is to cook and take care of her home"  ///
+
+local ga_agency_dm_labels "Gender attitudes (score=[0,1])" ///
+"Agrees that women’s most important role is to cook and take care of her household" ///
 "Agrees that household expenses are the responsibility of the husband" ///
 "Agrees that by nature men and women have different abilities in differenta areas" ///
 "Agrees that at work, men cope better with difficult conditions than women" ///
-"Perceived ability to take decisions alone if desired(score=[0,1])" ///
-"Perceives women in the community can make their own decisions (score=[0,1])" ///
-"Attitude towards domestic violence (1= Think it is always justified, 0= Never justified)" 
+"Agency: input in productive decisions (score=[0,1])" ///
+"Attitudes towards domestic violence (score=[0,1])"
 
-local labels_by_section "sociodemo_labels educ_labels  work_labels  network_labels  rm_support_labels  ga_agency_dm_labels "
+local labels_by_section "pj_training_choice_labels sociodemo_labels educ_labels  work_labels  network_labels  rm_support_labels  ga_agency_dm_labels "
 
 **************************************
 *** B. GENERATE TABLE AS A DATASET ***
@@ -148,6 +146,7 @@ local lab : word `j' of "``this_label_section''"
 di as result "`lab'"
 *local lab: variable label `var' 
 replace label_col = "`lab'" in `row'
+replace var = "`var'" in `row'
 
 
 local d= 1 
@@ -231,7 +230,7 @@ local d= `d' +1
 }
 
  
-keep label_col male_abidjan_mean female_abidjan_mean diff_abidjan ///
+keep var label_col male_abidjan_mean female_abidjan_mean diff_abidjan ///
 male_bassam_mean female_bassam_mean diff_bassam male_all_mean female_all_mean diff_all 
 
 format male_abidjan_mean female_abidjan_mean ///
@@ -240,7 +239,7 @@ male_bassam_mean female_bassam_mean male_all_mean female_all_mean  %9.2fc
 foreach var of varlist diff* {
 	replace `var' = "" if label_col =="N"
 }
-keep if _n <=(`row'+1)
+keep if _n <=(`row')
 
 
 
@@ -257,10 +256,12 @@ replace label_col = "\multicolumn{1}{r}{\textit{\textbf{SD}}}" if label_col == "
 foreach var in male_abidjan_mean female_abidjan_mean ///
 male_bassam_mean female_bassam_mean male_all_mean female_all_mean {
 	
-	gen this_var = string(`var', "%9.2fc") 
+	gen this_var =  ""
+	replace this_var = string(`var', "%9.2fc")  if label_col!="N"
+	replace this_var = string(`var', "%8.0g")  if label_col=="N"
 	replace this_var  =  "" if this_var  == "."
 	replace this_var = "\textit{" + this_var  + "}" if ///
-	diff_abidjan == ""  & diff_bassam =="" & this_var !=""
+	diff_abidjan == ""  & diff_bassam =="" & this_var !="" & label_col!="N"
 	
 	drop `var'
 	rename this_var  `var'
@@ -330,7 +331,7 @@ local end_table ///
 "\small {Notes:  \\" ///
 "Robust standard errors in parentheses. \\" ///
 "*** p\textless{}0.01, ** p\textless{}0.05, * p\textless{}0.1 \\" ///
-"This table shows the descriptive statistics, i.e., the characteristics of the sample. For each characteristic, we indicate the mean. When the variable is continuous, the standard deviation (SD) is shown in italics below the mean. The acronym EICT stands for Energy or  Information Communication and Technology. Attitudes toward gender roles are measured as the ratio of stereotypes to which the respondent agrees, divided by the number of questions on attitudes toward gender roles. Hence, when the variable attitudes toward gender roles is equal to 1,  the respondent agrees with all stereotypes. Standard errors are clustered by zone. Due to a low number of clusters (6), we rely on wild bootstrap to compute p-values." ///
+"This table shows the descriptive statistics, i.e., the characteristics of the sample. For each characteristic, we indicate the mean. When the variable is continuous, the standard deviation (SD) is shown in italics below the mean. The acronym EICT stands for Energy or  Information Communication and Technology. Gender attitudes are measured as the ratio of stereotypes to which the respondent agrees, divided by the number of questions on gender attitudes. Hence, when the variable gender attitudes is equal to 1,  the respondent agrees with all stereotypes. Standard errors are clustered by zone. Due to a low number of clusters (6), we rely on wild bootstrap to compute p-values." ///
 "}" ///
 "\end{minipage}" ///
 "\end{longtable}" ///
@@ -341,5 +342,5 @@ local end_table ///
  
 listtab label_col male_abidjan_mean female_abidjan_mean diff_abidjan empty_col1 ///
 male_bassam_mean female_bassam_mean diff_bassam empty_col2 male_all_mean female_all_mean diff_all ///
-using  "$Table_main/Table_4_descriptive_statistics.tex" ,  ///
+using  "$Table_main/Table_5_descriptive_statistics.tex" ,  ///
 rs(tabular)  footlines("`end_table'") headlines("`start_table'") replace

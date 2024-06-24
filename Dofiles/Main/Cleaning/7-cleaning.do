@@ -14,7 +14,8 @@ gen to_delete = 0
 
 local var_list train_choice gender city zone age married nkids_dependent hh_female_adult_prop /// 
 educbis read write numerical_literacy digital_literacy ///
-worked_energy_ict employed_energy_ict selfemployed_energy_ict gender train_energy_ict  ///
+worked_energy_ict employed_energy_ict selfemployed_energy_ict  worked_paid30d_dummy ///
+gender train_energy_ict  ///
 n5_eict_dummy n5_size n5_any n5_male n5_eict n5_fr n5_fam ///
 rm_dummy rm_male rm_female rm_fam rm_fr rm_energy_ict ///
 agency_general_zscore agencycom_general_zscore ///
@@ -24,13 +25,25 @@ foreach var in  `var_list' {
 replace to_delete =  1 if `var'==.
 } 
 
-mdesc `var_list'
+
+count if to_delete == 1 
 keep if to_delete == 0
 
 
+******************************
+* A. Conversion to USD PPP ***
+******************************
+
+local vars_to_convert revenues_total assets_business_value
+
+foreach var in `vars_to_convert' {
+	
+	replace `var' = `var' / 201.95 if cohort == 1
+	replace `var' = `var' / 201.44 if cohort == 2
+}
 
 *******************************************
-* B. Detecting outliers and winsorizing ***
+* C. Detecting outliers and winsorizing ***
 *******************************************
 
 local continuous  hh_size hh_size_female hh_size_male hh_female_hh_prop /// 
@@ -66,7 +79,7 @@ replace `var' = `r(p1)' if `var' < `r(p1)' & `var'!=0
 }
 
 *****************
-* C. Z-scores ***
+* D. Z-scores ***
 *****************
 local to_normalize ga_score agency_general dm_attitude_score ///
 n5_size n5_male_prop n5_fam_prop n5_fr_prop ///
@@ -80,7 +93,7 @@ foreach var in `to_normalize' { //start loop over variables to normalize
 
 	local lab: variable label `var' 
 	gen `var'_z= .
-	label var `var'_z  "`lab'"
+	label var `var'_z  "`lab' (z-score)"
 
 	quietly sum  cohort 
 

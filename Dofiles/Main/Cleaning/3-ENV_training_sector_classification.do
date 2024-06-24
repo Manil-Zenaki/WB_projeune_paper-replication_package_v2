@@ -169,6 +169,7 @@ foreach x in "`act_labels' "{
 
 
 
+
 drop if act_projeune_number == . 
 order  act_projeune_number male_proportion earnings
 sort act_projeune_number
@@ -183,6 +184,15 @@ replace act_projeune_number = `x' if _n == _N
 replace act_label = "`this_label'" if _n == _N
 local i = `i' + 1 
 }
+
+gen ict = 0 
+replace ict = 1  if inlist(act_projeune_number,2,14)
+
+gen energy = 0 
+replace energy = 1 if inlist(act_projeune_number,8,12,20)
+
+replace act_label =  act_label + " [ICT]" if ict ==1 
+replace act_label =  act_label + " [Energy]" if energy ==1 
 
 
 gen mds_75= (male_proportion >=0.75 & male_proportion != .)

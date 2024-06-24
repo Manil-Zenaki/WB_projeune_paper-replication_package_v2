@@ -177,7 +177,8 @@ label var worked30d_dummy  "Employed or self-employed in the last 30 days"
 
 label var employed6m_dummy "Employed as an employee or apprentice in the last 30 days"
 label var selfemployed6m_dummy "Had an income-generating activity in the last 30 days"
-label var worked6m_dummy  "Employed or self-employed in the last 30 days"
+label var worked6m_dummy  "Wage employed or self-employed in the last 30 days"
+label var worked_paid30d_dummy "Had a paid job in the last 30 days"
 
 **********************************
 * E.  Network and role models  ***
@@ -316,8 +317,9 @@ label var ga_expenses "Agrees that household expenses are the responsibility of 
 label var ga_abilities "Agrees that by nature men and women have different abilities in differenta areas"
 label var ga_conditions "Agrees that at work, men cope better with difficult conditions than women."
 
-label var ga_score_p "gender norms score (1= agrees with all stereotypes, 0= agrees with none)"
-label var ga_zscore "gender norms zscore"
+label var ga_score "Gender attitudes score"
+label var ga_score_p "Gender attitudesscore (1= agrees with all stereotypes, 0= agrees with none)"
+label var ga_zscore "Gender attitudes zscore"
 
 *****************
 * H.  Agency  ***
@@ -372,6 +374,7 @@ label var jointdecision_work_zscore "Joint decisions in important decisions rega
 label var soledecision_general_zscore "Joint decisions regarding own work, health, household expenses and daily tasks (zscore)"
 label var soledecision_work_zscore "Joint decisions in important decisions regarding own business activities, employment and remuneration (zscore)"
 
+label var agency_general "Agency"
 label var agency_general_p "Perceived ability to take decisions alone if desired (score=[0,1])"
 label var agencycom_general_p "Perceives women in the community can take their own decisions (score=[0,1])"
 label var agency_general_zscore "Perceived ability to take his/her own decision (zscore)" 

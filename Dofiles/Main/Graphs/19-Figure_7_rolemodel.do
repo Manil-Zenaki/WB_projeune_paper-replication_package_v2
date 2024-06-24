@@ -6,10 +6,9 @@
 *****************************************************************************************/
 
 
-local var_label "Has a role model"  "Male role model"  "Female role model" ///
-"Role model in MDSs (excluding EICT)"   "Role model in EICT" ///
- "Can seek professional advice from individuals outside the family"   ///
- "Can seek professional advice from men outside the family" 
+local var_label "Male role model"  "Female role model" ///
+"Role model in EICT" ///
+"Can seek professional advice from individuals outside the family" 
 
 	
 use "$Data_final/cohorts_1_2_clean.dta", clear
@@ -47,8 +46,7 @@ local x = 1
 local w = 1
 
 
-foreach var in rm_dummy rm_male rm_female  rm_mds_not_eict rm_energy_ict ///
-support support_male  {
+foreach var in  rm_male rm_female rm_energy_ict support  {
 
 
 	local lab : word `w' of "`var_label'"
@@ -150,11 +148,9 @@ title("Role model and support") ///
 ytitle("") xtitle("Regression coefficient") ///
 ylabel(none, notick labsize(small) angle(horizontal) nogrid) ///
 ylabel(0.25 "Proportion of contacts working in Energy or ICT", add custom labcolor(white)) ///
-ylabel(13.25 "Has a role model" 11.25 "Male role model" 9.25 "Female role model" ///
-7.25 "Role model in MDSs (excluding EICT)"   5.25 "Role model in EICT" ///
-3.25 `" "Can seek professional advice" "from individuals outside the family" "'  ///
-0.75`" "Can seek professional advice" "from men outside the family" "', add) ///
-yline(13.25 11.25 9.25 7.25 5.25 3.25 1.25 , lstyle(grid)) ///
+ylabel(7.25 "Male role model" 5.25 "Female role model" 3.25 "Role model in EICT" ///
+1.25 `" "Can seek professional advice" "from individuals outside the family" "', add) ///
+yline(7.25 5.25 3.25 1.25 , lstyle(grid)) ///
 legend(label(1 "Male") label(2 "Female") label(3 "90% CI") label(4 "90% CI") /// 
 pos(6) row(1)) ///
 )

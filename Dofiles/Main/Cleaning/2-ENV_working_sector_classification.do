@@ -142,7 +142,11 @@ merge 1:1 act_projeune_number using `male_proportion'
 replace earnings =  round(earnings / 250.64, 1) 
 
 drop _merge
+gen ict = 0 
+replace ict = 1  if inlist(act_projeune_number,27)
 
+gen energy = 0 
+replace energy = 1 if inlist(act_projeune_number,10,12,26)
 *************************
 * C. Sector labels ******
 *************************
@@ -206,7 +210,8 @@ foreach x in "`act_labels' "{
 	local i = `i' + 1 
 }
 
-
+replace act_label =  act_label + " [ICT]" if ict ==1 
+replace act_label =  act_label + " [Energy]" if energy ==1 
 
 drop if act_projeune_number == . 
 order  act_projeune_number male_proportion earnings

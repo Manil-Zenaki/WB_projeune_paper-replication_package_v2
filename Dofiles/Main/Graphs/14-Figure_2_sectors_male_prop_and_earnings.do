@@ -146,7 +146,10 @@ drop _merge
 replace earnings =  earnings / 250.64 
 
 
+* determine ICT 
 
+gen eict = 0 
+replace eict = 1 if inlist(sector, 12,20)
 
 ***************
 ***B. GRAPH ***
@@ -157,9 +160,9 @@ sort earnings male_proportion
 
 gen lab_position = .
 
-replace lab_position = 3 if inlist(sector, 1,4,5, 8,13,16, 17,23,  27) // right
+replace lab_position = 3 if inlist(sector, 1,4,5, 8,12,13,14,16, 17,20, 23,25,27, 28) // right
 
-replace lab_position = 9 if inlist(sector, 2, 3, 6,11,  18, 21, 22, 24, 26) // left
+replace lab_position = 9 if inlist(sector, 2, 3, 6, 18, 21, 22, 24,25, 26, 28) // left
 
 
 replace lab_position = 6 if inlist(sector, 9, 10) // bottom 
@@ -182,14 +185,17 @@ label define resp_act1_groupedlbl 1 "Teaching" 2 "Public administration" ///
 */
 
 
-twoway (scatter earnings male_proportion , color(black) ///
-mlabcolor(black) mlabvposition(lab_position) mlabel(sector) mlabgap(0.1) ///
+twoway (scatter earnings male_proportion if eict == 0 , color(black) ///
+mlabcolor(black) mlabvposition(lab_position) mlabel(sector) mlabgap(0.1) ) ///
+(scatter earnings male_proportion if eict == 1 , color(blue) ///
+mlabcolor(blue) mlabvposition(lab_position) mlabel(sector) mlabgap(0.1) /// 
 xline(0.75, lcolor(black) lstyle(line)) ///
 xscale(lstyle(none) r(-0.2 1.2)) ///
 xlabel( 0 0.2 0.4 0.6 0.75  1,  notick) ///
 yscale( lstyle(none)) ///
 title("") ///
 ytitle("Median earnings PPP") xtitle("Proportion of men") ///
+leg(off) ///
 )
 
 graph export "$Graph_main/Figure_2_ENV_earnings.png", replace

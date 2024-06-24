@@ -1,10 +1,16 @@
 /****************************************************************************************
 *Project: 		    Pro-Jeune 
-*Purpose: 			EXPLORING RELATIONSHIP BETWEEN NETWORK AND TRAINING CHOICE
+*Purpose: 			EXPLORING RELATIONSHIP BETWEEN ROLE MODELS, SUPPORT AND TRAINING CHOICE
 *Authors: 		    Clara Delavallade, Manil Zenaki, Léa Rouanet, Estelle Koussoubé
 *Last Edit:		    06/10/2023
 *****************************************************************************************/
-use "$Data_final/cohorts_1_2_clean.dta", clear
+
+local var_label "Gender attitudes" "Agrees that women’s most important role is to cook and take care of her household "  "Agrees that household expenses are the responsibility of the husband"   ///
+"Agrees that by nature men and women have different abilities in differenta areas" /// 
+ "Agrees that at work, men cope better" "with difficult conditions than women"  "Agency" "Attitudes towards domestic violence"
+
+
+ use "$Data_final/cohorts_1_2_clean.dta", clear
 
 
 **************************************************
@@ -29,24 +35,17 @@ foreach x in ub lb p mde {
 local CI_95 = 0.025
 local CI_90 = 0.05
 
-* labels 
-local var_label "Has a professional Network" "Network size" ///
-"Proportion of Males in the network""Proportion of family members in the network" /// 
-"Proportion of friends in the network" ///
-"Proportion of contacts working in MDSs (excluding EICT)" ///
- "Proportion of contacts working in EICT"
-
-
 ******************************************************************
 * B.  Generate required dataframe with cohort specific zscore  ***
 ******************************************************************
+
 
 local row = 1
 local x = 1 
 local w = 1
 
 
-foreach var in n5_any n5_size_z n5_male_prop_z n5_fam_prop_z n5_fr_prop_z n5_mds_not_eict_prop_z n5_eict_prop_z  {
+foreach var in  ga_score_z ga_cook ga_expenses ga_abilities ga_conditions agency_general_z dm_attitude_score_z {
 	
 	local lab : word `w' of "`var_label'"
 	
@@ -98,11 +97,11 @@ replace lb_educ= _b[`var'] - invttail(e(df_r),`CI_90') * _se[`var'] in `row'
 replace ub_educ=  _b[`var'] + invttail(e(df_r),`CI_90') * _se[`var'] in `row'
 
 local row= `row' + 1 
-local x= `x' + 0.5	
+local x= `x' + 1	
 }
-local row = `row' + 1
-local x = `x' +  1
-local w = `w' + 1 
+local row= `row' + 1
+local x= `x' +  2
+local w = `w' +1 
 }
 
 
@@ -134,8 +133,6 @@ tab x
 tab coeff
 
 
-
-
 *v3 
 set scheme white_tableau
 twoway (scatter x1 coeff if gender_name=="Male", color(orange)) ///
@@ -143,25 +140,22 @@ twoway (scatter x1 coeff if gender_name=="Male", color(orange)) ///
 (rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Male", horizontal lcolor(orange))  ///
 (rcap lb_bootstrapped ub_bootstrapped x1 if gender_name=="Female", horizontal lcolor(ebblue) ///
 xline(0, lcolor(red) lstyle(line)) ///
-xlabel(none) xlab("-0.1 -0.05 0.05 0.1", add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
+xlabel(none) xlab( "-0.3 -0.2  -0.1  0.1 0.2 0.3" , add labcolor(grey)) xlab(0, add custom labcolor(red) tlc(red)) ///
 yscale(lstyle(none) alt) ///
 graphregion(color(white)) ///
 ysize(5) xsize(9) ///
-title("Network") ///
+title("Gender attitudes, agency and domestic violence", size(medium)) ///
 ytitle("") xtitle("Regression coefficient") ///
-ylabel(13.25 "Has a professional Network" 11.25 "Network size" 9.25 "Proportion of Males in the network" ///
-7.25 "Proportion of family members in the network" 5.25 "Proportion of friends in the network" ///
-3.25  "Proportion of contacts working in MDSs (excluding EICT)"  ///
-1.25 "Proportion of contacts working in EICT", notick labsize(small) angle(horizontal)) ///
+ylabel(25.5 "Gender attitudes" 21.5 `" "Agrees that women’s most important role" "is to cook and take care of her household "'  17.5 `" "Agrees that household expenses" "are the responsibility of the husband" "'  ///
+13.25 `""Agrees that by nature men and women" "have different abilities in differenta areas" "'   9.5 `""Agrees that at work, men cope better " "with difficult conditions than women" "' 5.25 "Agency: input in productive decisions" ///
+1.5 "Attitudes towards domestic violence", notick labsize(small) angle(horizontal)) ///
 legend(label(1 "Male") label(2 "Female") label(3 "90% CI") label(4 "90% CI") /// 
 pos(6) row(1)) ///
 )
 
 
-
-
-graph save "$Graph_main/Figure_6_network.gph", replace
-graph export "$Graph_main/Figure_6_network.png", replace
-graph export "$Graph_main/Figure_6_network.svg", replace
+graph save "$Graph_main/Figure_8_gender_attitudes.gph", replace
+graph export "$Graph_main/Figure_8_gender_attitudes.png", replace
+graph export "$Graph_main/Figure_8_gender_attitudes.svg", replace
 
 
