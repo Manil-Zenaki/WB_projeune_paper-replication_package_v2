@@ -13,13 +13,6 @@ use "$Data_final/cohorts_1_2_clean.dta", clear
 
 ** A.1 variables included in the analysis
 
-local sociodemo age_resp_z nkids_dependent_z wealth_hh_rich
-local experience worked_paid30d_dummy worked_energy_ict 
-local network n5_size_z n5_male_prop_z 
-local rm_support rm_male rm_female support_bothsex
-local ga_agency_dv ga_score_z agency_general_z 
-local educ educbis_z train_energy_ict 
-
 
 local sections "sociodemo educ experience network rm_support ga_agency_dv"
 local section_name "Sociodemographic characteristics" ///
@@ -27,7 +20,7 @@ local section_name "Sociodemographic characteristics" ///
 "Employment and revenues" /// 
 "Network"  /// 
 "Role model and support" ///
-"Gender attitudes, agency and attitudes toward domestic violence"
+"Gender attitudes and agency"
 
 
 
@@ -45,10 +38,9 @@ local educ_labels "Years of education" ///
 "Training in EICT"
 
 
-local work_labels  "Wage-employed in the last 6m" ///
-"Self-employed in the last 6m" ///
+local work_labels  "Wage-employed in the last 30d" ///
+"Self-employed in the last 30d" ///
 "Had a paid work in the last 30d" ///
-"Worked in MDSs (excluding EICT) in the last 30d" ///
 "Worked in EICT in the last 30d" ///
 "Revenues earned in the last 30d (USD PPP)"
 

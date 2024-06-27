@@ -13,6 +13,7 @@ local t= 7 // for table name
 
 foreach gender_name in male female  {
 	use "$Data_final/cohorts_1_2_clean.dta", clear
+	keep if cohort == 1 
 ******************************************
 * A.  Variables to regress and labels  ***
 ******************************************
@@ -33,7 +34,7 @@ local section_name "Sociodemographic characteristics" ///
 "Employment and revenues"  ///
 "Network"  /// 
 "Role model and support" ///
-"Gender attitudes and agency" ///
+"Gender attitudes, agency and attitudes toward domestic violence" ///
 
 
 
@@ -221,7 +222,7 @@ local end_table ///
 "\end{landscape}"
 
 listtab label_col  coeff_1 coeff_2 coeff_3 coeff_4 coeff_5 coeff_6 ///
-using  "$Table_main/Table_`t'_drivers_`gender_name'_theory.tex" ,  ///
+using  "$Table_main/Table_`gender_name'_c1_theory.tex" ,  ///
 rs(tabular)  footlines("`end_table'") headlines("`start_table'") replace
 
 

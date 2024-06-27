@@ -604,8 +604,9 @@ replace rm_mds = 1 if  inlist(as2_act,1, 3, 9, 10, 11, 12, 13, 14, ///
  15, 20, 22, 23, 26, 27, 32, 33, 34, 38, 39,40 )
 replace rm_mds= 0 if ( as2_act!=. & rm_mds!= 1 ) | as1_know==0 
 
-replace rm_not_mds = 1 if rm_dummy==1 & rm_mds==0
-replace rm_not_mds = 1 if rm_dummy==0 | rm_mds==1
+replace rm_not_mds = 1 if rm_dummy==1 & !inlist(as2_act,1, 3, 9, 10, 11, 12, 13, 14, ///
+ 15, 20, 22, 23, 26, 27, 32, 33, 34, 38, 39,40,. )
+replace rm_not_mds = 0 if rm_dummy==0 | rm_mds==1 
 
 replace rm_energy_ict = 1 if  inlist(as2_act, 10 , 12, 16, 27 )
 replace rm_energy_ict= 0 if (as2_act!=. & rm_energy_ict!= 1) |as1_know==0 
@@ -641,6 +642,22 @@ replace rm_energy_ict_`x'=1 if rm_energy_ict== 0  | rm_`x'==1  | as1_know==0
 
 gen rm_oppositesex= 0 
 replace rm_oppositesex = 1 if (rm_male ==1 & gender ==1) | (rm_female==1 & gender==0)
+
+*
+
+foreach x in fr fam mds not_mds  {
+	
+gen rm_female_`x' = .
+replace rm_female_`x' = 0 if rm_female == 0 | rm_`x'== 0 
+replace rm_female_`x'  = 1 if rm_female == 1 & rm_`x'== 1 	
+}
+
+gen rm_female_eict = .
+replace rm_female_eict = 0 if rm_female == 0 | rm_energy_ict== 0 
+replace rm_female_eict  = 1 if rm_female == 1 & rm_energy_ict== 1 	
+ 
+
+ 
 ** E.4 Entourage (Non-family) support ** 
 
 gen support= .

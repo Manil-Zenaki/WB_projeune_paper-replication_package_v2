@@ -12,14 +12,16 @@
 gen to_delete = 0
 
 
-local var_list train_choice gender city zone age married nkids_dependent hh_female_adult_prop /// 
-educbis read write numerical_literacy digital_literacy ///
-worked_energy_ict employed_energy_ict selfemployed_energy_ict  worked_paid30d_dummy ///
-gender train_energy_ict  ///
-n5_eict_dummy n5_size n5_any n5_male n5_eict n5_fr n5_fam ///
-rm_dummy rm_male rm_female rm_fam rm_fr rm_energy_ict ///
-agency_general_zscore agencycom_general_zscore ///
-ga_zscore ga_expenses ga_cook revenues_total revenues_aspiration
+local var_list train_choice_salaried train_choice_selfemp ///
+train_choice_vt train_choice_energy train_choice_tic train_choice_lipton ///  trainin_choice
+age_resp  nkids_dependent wealth_hh_rich  wealthindex_hh_z /// sociodemo
+educbis  train_dummy  train_energy_ict train_choice_mds /// educ  and past training 
+employed30d_dummy selfemployed30d_dummy worked_paid30d_dummy ///
+worked_mds_not_eict worked_energy_ict revenues_total /// employment and earnings 
+n5_any n5_size n5_male_prop /// network 
+rm_male rm_female rm_energy_ict support  /// role models and support
+ga_score_p ga_cook ga_expenses ga_abilities ga_conditions agency_general_p dm_attitude_p  // gender attitudes, agency, domestic violence
+
 
 foreach var in  `var_list' {
 replace to_delete =  1 if `var'==.
@@ -51,10 +53,10 @@ nbr_adults_hh nbr_children_hh hh_female_adult_prop ///
  time_ratio n5* network* perceived_support perceived_mockery ///
 cognitive_score cognitive_score_z *zscore cognitive_score_p ///
 revenues_total total_savings_under total_savings /// 
- lending_totaldue assets_business_value borrowing_totaldue lending_totalnet ///
- revenues_aspiration ///
- ga_score_p agencycom_work_p agencycom_general_p agency_work_p agency_general_p ///
- dm_attitude_score dm_attitude_zscore dm_attitude_p
+lending_totaldue assets_business_value borrowing_totaldue lending_totalnet ///
+revenues_aspiration ///
+ga_score_p agencycom_work_p agencycom_general_p agency_work_p agency_general_p ///
+dm_attitude_score dm_attitude_zscore dm_attitude_p
 
 *set trace on 
 foreach var of varlist `continuous' {

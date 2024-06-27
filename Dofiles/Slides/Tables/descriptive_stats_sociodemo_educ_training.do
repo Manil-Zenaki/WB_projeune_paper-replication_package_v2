@@ -36,9 +36,10 @@ train_choice_vt train_choice_energy train_choice_tic train_choice_lipton
 
 local sociodemo age_resp  nkids_dependent wealth_hh_rich // sociodemo
 
-local educ educbis  train_dummy  train_energy_ict train_choice_mds // educ  and past training 
+local educ educbis  train_dummy  train_energy_ict // educ  and past training 
 
-
+local work   employed30d_dummy selfemployed30d_dummy ///
+worked_paid30d_dummy  worked_energy_ict revenues_total // employment and earnings 
 
 local continuous age_resp  nkids_dependent  ///
 educbis ///
@@ -51,8 +52,8 @@ local all_vars `pj_training_choice' `sociodemo' `educ' `work' `network' `rm_supp
 
 
 ** A.3 Sections:  each variable belong to a section
-local section "pj_training_choice sociodemo educ"
-local section_name "PRO-Jeunes Training choice" "Sociodemographics" "Education and training" 
+local section "sociodemo educ work"
+local section_name  "Sociodemographics" "Education and training"  "Employment and earnings"
 
 *when new section name 
 local section_count : word count in `section'
@@ -65,12 +66,12 @@ local condition "if city==0" "if city==1" "if inlist(city,0,1)"
 
 ** A.5 Labels  (variable labels are sometimes too long and therefore they are truncated)
 
-local pj_training_choice_labels "Wage-employement track" ///
+/*local pj_training_choice_labels "Wage-employement track" ///
 "Generalist entrepreneurial track" ///
 "Vocational training track" ///
 "Vocational training in energy" ///
 "Vocational training in information and communication technologies (ICT)" ///
-"Vocational training in trade"
+"Vocational training in trade" */
 
 
 local sociodemo_labels "Age of the respondent" ///
@@ -81,10 +82,15 @@ local educ_labels "Years of education" ///
 "Any training"  ///
 "Training in EICT"
 
+local work_labels  "Wage-employed in the last 30d"  ///
+"Self-employed in the last 30d" ///
+"Had a paid work in the last 30d" ///
+"Worked in EICT in the last 30d" ///
+"Revenues earned in the last 30d winsorized (USD PPP)"
 
 
 
-local labels_by_section "pj_training_choice_labels sociodemo_labels educ_labels"
+local labels_by_section "sociodemo_labels educ_labels work_labels"
 
 **************************************
 *** B. GENERATE TABLE AS A DATASET ***
@@ -179,6 +185,7 @@ local j = `j' + 1
 local i= `i' +1 
 } // end loop over sections 
 
+local row = `row' + 1 
 replace label_col = "N" in `row'
 local d= 1 
 foreach district in bassam abidjan all { 
@@ -214,7 +221,7 @@ gen empty_col2 = .
 ******************************
 *** C. FORMAT LATEX TABLE  ***
 ******************************
-replace label_col = "\multicolumn{1}{r}{\textit{\textbf{SD}}}" if label_col == "SD"
+replace label_col = "\multicolumn{1}{r}{\textit{SD}}" if label_col == "SD"
 
 
 
@@ -237,14 +244,12 @@ male_bassam_mean female_bassam_mean male_all_mean female_all_mean {
 
 replace label_col = "\textbf{" + label_col + "}" if male_all_mean =="" & female_all_mean == ""
 local start_table  "\begin{table}" ///
-"\centering" /// 
+"\centering" ///
 "\label{tab:descriptive_stats_sociodemo_educ_training}" ///
 "\resizebox{\linewidth}{!}{" ///
- "\begin{tabular}{m{9cm}ccccccccccc}" ///
- "\toprule" ///
- "& \multicolumn{3}{c}{Abidjan} & & \multicolumn{3}{c}{Grand Bassam} & & \multicolumn{3}{c}{Sample} \\"  ///
- "\cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}" ///
- "& \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} & & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} & & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} \\" ///
+"\begin{tabular}{m{9cm}ccc}" ///
+"\toprule" ///
+" & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff}  \\" ///
 "\midrule"
 
 
@@ -259,7 +264,6 @@ local end_table ///
 "\end{table}"
 
  
-listtab label_col male_abidjan_mean female_abidjan_mean diff_abidjan empty_col1 ///
-male_bassam_mean female_bassam_mean diff_bassam empty_col2 male_all_mean female_all_mean diff_all ///
+listtab label_col male_all_mean female_all_mean diff_all ///
 using  "$Table_slides/descriptive_stats_sociodemo_educ_training.tex" ,  ///
 rs(tabular)  footlines("`end_table'") headlines("`start_table'") replace

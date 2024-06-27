@@ -38,8 +38,8 @@ local sociodemo age_resp  nkids_dependent wealth_hh_rich // sociodemo
 
 local educ educbis  train_dummy  train_energy_ict train_choice_mds // educ  and past training 
 
-local work  employed6m_dummy selfemployed6m_dummy worked_paid30d_dummy ///
- worked_mds_not_eict worked_energy_ict revenues_total // employment and earnings 
+local work  employed30d_dummy selfemployed30d_dummy worked_paid30d_dummy ///
+worked_energy_ict revenues_total // employment and earnings 
 
 local network n5_any n5_size n5_male_prop // network 
 
@@ -62,7 +62,7 @@ local all_vars `pj_training_choice' `sociodemo' `educ' `work' `network' `rm_supp
 local section "pj_training_choice sociodemo educ work network rm_support ga_agency_dm"
 local section_name "PRO-Jeunes Training choice" "Sociodemographics" "Education and training" ///
 "Employment and earnings" "Network size and characteristics" ///
-"Role Model and support outside the family" "Gender attitudes, agency and domestic violence"
+"Role Model and support outside the family" "Gender attitudes and agency"
 
 *when new section name 
 local section_count : word count in `section'
@@ -92,10 +92,9 @@ local educ_labels "Years of education" ///
 "Training in EICT"
 
 
-local work_labels  "Wage-employed in the last 6m" ///
-"Self-employed in the last 6m" ///
+local work_labels  "Wage-employed in the last 30d" ///
+"Self-employed in the last 30d" ///
 "Had a paid work in the last 30d" ///
-"Worked in MDSs (excluding EICT) in the last 30d" ///
 "Worked in EICT in the last 30d" ///
 "Revenues earned in the last 30d (USD PPP)"
 
@@ -111,13 +110,13 @@ local rm_support_labels "Male role model"  ///
 
 
 
-local ga_agency_dm_labels "Gender attitudes (score=[0,1])" ///
+local ga_agency_dm_labels "Gender attitudes [0,1]" ///
 "Agrees that women’s most important role is to cook and take care of her household" ///
 "Agrees that household expenses are the responsibility of the husband" ///
 "Agrees that by nature men and women have different abilities in differenta areas" ///
 "Agrees that at work, men cope better with difficult conditions than women" ///
-"Agency: input in productive decisions (score=[0,1])" ///
-"Attitudes towards domestic violence (score=[0,1])"
+"Agency: input in productive decisions [0,1]" ///
+"Attitudes towards domestic violence [0,1]"
 
 local labels_by_section "pj_training_choice_labels sociodemo_labels educ_labels  work_labels  network_labels  rm_support_labels  ga_agency_dm_labels "
 

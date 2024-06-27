@@ -58,8 +58,8 @@ local all_vars `pj_training_choice' `sociodemo' `educ' `work' `network' `rm_supp
 
 
 ** A.3 Sections:  each variable belong to a section
-local section "work network rm_support ga_agency_dm"
-local section_name "Employment and earnings" "Network size and characteristics" ///
+local section "network rm_support ga_agency_dm"
+local section_name "Network size and characteristics" ///
 "Role Model and support outside the family" "Gender attitudes, agency and domestic violence"
 
 *when new section name 
@@ -73,12 +73,10 @@ local condition "if city==0" "if city==1" "if inlist(city,0,1)"
 
 ** A.5 Labels  (variable labels are sometimes too long and therefore they are truncated)
 
-local work_labels  "Had a paid work in the last 30d" ///
-"Worked in EICT in the last 30d" ///
-"Revenues earned in the last 30d (USD PPP)"
 
-local network_labels "Network size" ///
-"Proportion of Males in the network"
+
+local network_labels "Network size winsorized" ///
+"Proportion of males in the network winsorized"
 
 
 local rm_support_labels "Male role model"  ///
@@ -88,11 +86,11 @@ local rm_support_labels "Male role model"  ///
 
 
 
-local ga_agency_dm_labels "Gender attitudes (score=[0,1])" ///
-"Agency: input in productive decisions (score=[0,1])" ///
-"Attitudes towards domestic violence (score=[0,1])"
+local ga_agency_dm_labels "Gender attitudes [0,1]" ///
+"Agency: input in productive decisions [0,1]" ///
+"Attitudes towards domestic violence [0,1]"
 
-local labels_by_section "work_labels  network_labels  rm_support_labels  ga_agency_dm_labels "
+local labels_by_section "rm_support_labels  ga_agency_dm_labels"
 
 **************************************
 *** B. GENERATE TABLE AS A DATASET ***
@@ -187,6 +185,7 @@ local j = `j' + 1
 local i= `i' +1 
 } // end loop over sections 
 
+local row = `row' + 1 
 replace label_col = "N" in `row'
 local d= 1 
 foreach district in bassam abidjan all { 
@@ -222,7 +221,7 @@ gen empty_col2 = .
 ******************************
 *** C. FORMAT LATEX TABLE  ***
 ******************************
-replace label_col = "\multicolumn{1}{r}{\textit{\textbf{SD}}}" if label_col == "SD"
+replace label_col = "\multicolumn{1}{r}{\textit{SD}}" if label_col == "SD"
 
 
 
@@ -245,14 +244,13 @@ male_bassam_mean female_bassam_mean male_all_mean female_all_mean {
 
 replace label_col = "\textbf{" + label_col + "}" if male_all_mean =="" & female_all_mean == ""
 local start_table  "\begin{table}" ///
+"\fontsize{7}{9}\selectfont" ///
 "\centering" /// 
-"\label{tab:descriptive_stats_sociodemo_educ_training}" ///
+"\label{tab:descriptive_stats_work_network_rm_ga_agency}" ///
 "\resizebox{\linewidth}{!}{" ///
- "\begin{tabular}{m{9cm}ccccccccccc}" ///
+ "\begin{tabular}{m{9cm}ccc}" ///
  "\toprule" ///
- "& \multicolumn{3}{c}{Abidjan} & & \multicolumn{3}{c}{Grand Bassam} & & \multicolumn{3}{c}{Sample} \\"  ///
- "\cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}" ///
- "& \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} & & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} & & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff} \\" ///
+ " & \multicolumn{1}{l}{Male} & \multicolumn{1}{l}{Female} & \multicolumn{1}{l}{Diff}  \\" ///
 "\midrule"
 
 
@@ -267,7 +265,6 @@ local end_table ///
 "\end{table}"
 
  
-listtab label_col male_abidjan_mean female_abidjan_mean diff_abidjan empty_col1 ///
-male_bassam_mean female_bassam_mean diff_bassam empty_col2 male_all_mean female_all_mean diff_all ///
+listtab label_col male_all_mean female_all_mean diff_all ///
 using  "$Table_slides/descriptive_stats_work_network_rm_ga_agency.tex" ,  ///
 rs(tabular)  footlines("`end_table'") headlines("`start_table'") replace

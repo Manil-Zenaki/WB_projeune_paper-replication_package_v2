@@ -39,12 +39,12 @@ local row= 1
 local x= 1  
 local w = 1 
 
-local var_label "Wage-employed in the last 6m" "Self-employed in the last 6m" ///
-"Worked for pay in the last 30d" "Worked in MDSs (excluding EICT) in the last 30d" ///
+local var_label "Wage-employed in the last 30d" "Self-employed in the last 30d" ///
+"Worked for pay in the last 30d" ///
  "Worked in EICT in the last 30d" "Revenues earned in the last 30d"
 
-foreach var in employed6m_dummy selfemployed6m_dummy worked_paid30d_dummy ///
- worked_mds_not_eict worked_energy_ict revenues_total_z {
+foreach var in employed30d_dummy selfemployed30d_dummy worked_paid30d_dummy ///
+worked_energy_ict revenues_total_z {
 	local lab : word `w' of "`var_label'"
 	
 forval i=0/1{
@@ -148,9 +148,8 @@ yscale(lstyle(none) alt) ///
 graphregion(color(white)) ///
 title("Employment and revenues") ///
 ytitle("") xtitle("Regression coefficient") ///
-ylabel(11.25 "Wage-employed in the last 6m" 9.25 "Self-employed in the last 6m" ///
-7.25 "Had a paid work in the last 30d" ///
-5.25 `" "Worked in MDSs (excluding EICT)" "in the last 30d" "' ///
+ylabel(9.25 "Wage-employed in the last 30d" 7.25 "Self-employed in the last 30d" ///
+5.25 "Had a paid work in the last 30d" ///
 3.25 "Worked in EICT in the last 30d" ///
 1.25 "Revenues earned in the last 30d", notick labsize(small) angle(horizontal)) ///
 legend( order (1 "Male" 2 "Female" 3 "90% CI" 4 "90% CI") /// 

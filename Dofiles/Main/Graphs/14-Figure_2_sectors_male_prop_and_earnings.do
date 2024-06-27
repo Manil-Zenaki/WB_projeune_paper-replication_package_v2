@@ -111,7 +111,7 @@ label define resp_act1_groupedlbl 0 "Research and university teaching" 1 "Teachi
 3 "Restaurant" 4 "Transportation"  5 "Machine operation"  6 "Retail trade: food" ///
 7 "Retail trade: other"  8 "Security guard" 9 "Housekeeping"   /// 
 10 "Fishing" 11 "Agriculture/livestock" 12 "Energy" 13 "Metallurgy"  ///
-14 "Mechanics" 15 "Construction" 16 "Textile" 17 "Police, Army" 18 "Joiner" 19 "Hairdressing" 20 "TIC"  ///
+14 "Mechanics" 15 "Construction" 16 "Textile" 17 "Police, Army" 18 "Joiner" 19 "Hairdressing" 20 "ICT"  ///
 21 "Medecine" 22"Health (other)" 23 "Aviation" 24 "Acounting" 25 "Law" 26 "Social" ///
 27 "Craftsmen (other)"  28 "Maritime" 29 "Art and Sport" 
 

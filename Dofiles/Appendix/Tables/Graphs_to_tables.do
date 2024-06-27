@@ -17,8 +17,8 @@ use "$Data_final/cohorts_1_2_clean.dta", clear
 ** A.1 variables included in the analysis
 
 local sociodemo age_resp_z nkids_dependent_z wealthindex_hh_z
-local experience employed6m_dummy selfemployed6m_dummy worked_paid30d_dummy ///
- worked_mds_not_eict worked_energy_ict revenues_total_z
+local experience employed30d_dummy selfemployed30d_dummy worked_paid30d_dummy ///
+ worked_energy_ict revenues_total_z
 local network n5_any n5_size_z n5_male_prop_z 
 local rm_support rm_male rm_female rm_energy_ict support
 local ga_agency_dv ga_score_z ga_cook ga_expenses ga_abilities ///
@@ -31,7 +31,7 @@ local section_name "Sociodemographic characteristics" ///
 "Education and training" ///
 "Employment and revenues"  "Network"  /// 
 "Role model and support" ///
-"Gender attitudes, agency and attitudes toward domestic violence" ///
+"Gender attitudes and agency" ///
 
 
 
@@ -41,10 +41,9 @@ local sociodemo_labels "Age of the respondent (z-score)" ///
 "Number of dependent children (z-score)" ///
 "Household wealth index by cohort (z-score)"
 
-local work_labels  "Wage-employed in the last 6m" ///
-"Self-employed in the last 6m" ///
+local work_labels  "Wage-employed in the last 30d" ///
+"Self-employed in the last 30d" ///
 "Had a paid work in the last 30d" ///
-"Worked in MDSs (excluding EICT) in the last 30d" ///
 "Worked in EICT in the last 30d" ///
 "Revenues earned in the last 30d (z-score)"
 

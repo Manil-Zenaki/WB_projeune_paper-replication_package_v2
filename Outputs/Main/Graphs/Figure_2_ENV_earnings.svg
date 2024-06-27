@@ -1475,10 +1475,10 @@
 	<text x="3261.47" y="1849.12" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Construction</text>
 	<circle cx="3642.97" cy="1870.05" r="14.85" style="fill:#000000"/>
 	<circle cx="3642.97" cy="1870.05" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
-	<text x="3642.97" y="1932.87" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Fishing</text>
+	<text x="3663.90" y="1891.06" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Security guard</text>
 	<circle cx="3642.97" cy="1870.05" r="14.85" style="fill:#000000"/>
 	<circle cx="3642.97" cy="1870.05" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
-	<text x="3663.90" y="1891.06" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Security guard</text>
+	<text x="3642.97" y="1932.87" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Fishing</text>
 	<circle cx="3612.47" cy="1756.78" r="14.85" style="fill:#000000"/>
 	<circle cx="3612.47" cy="1756.78" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
 	<text x="3633.39" y="1777.80" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Mechanics</text>
@@ -1529,7 +1529,7 @@
 	<text x="3269.84" y="1550.99" style="font-family:'Helvetica';font-size:59.94px;fill:#0000ff">Energy</text>
 	<circle cx="3202.74" cy="1416.71" r="14.85" style="fill:#0000FF"/>
 	<circle cx="3202.74" cy="1416.71" r="12.69" style="fill:none;stroke:#0000FF;stroke-width:4.32"/>
-	<text x="3223.66" y="1437.73" style="font-family:'Helvetica';font-size:59.94px;fill:#0000ff">TIC</text>
+	<text x="3223.66" y="1437.73" style="font-family:'Helvetica';font-size:59.94px;fill:#0000ff">ICT</text>
 	<line x1="503.14" y1="2436.79" x2="463.19" y2="2436.79" style="stroke:#808080;stroke-width:5.76"/>
 	<text x="443.20" y="2464.79" style="font-family:'Helvetica';font-size:79.92px;fill:#000000" text-anchor="end">0</text>
 	<line x1="503.14" y1="1868.56" x2="463.19" y2="1868.56" style="stroke:#808080;stroke-width:5.76"/>

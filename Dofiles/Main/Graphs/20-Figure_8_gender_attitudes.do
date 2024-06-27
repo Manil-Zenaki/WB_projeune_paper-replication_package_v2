@@ -144,7 +144,7 @@ xlabel(none) xlab( "-0.3 -0.2  -0.1  0.1 0.2 0.3" , add labcolor(grey)) xlab(0, 
 yscale(lstyle(none) alt) ///
 graphregion(color(white)) ///
 ysize(5) xsize(9) ///
-title("Gender attitudes, agency and domestic violence", size(medium)) ///
+title("Gender attitudes and agency", size(medium)) ///
 ytitle("") xtitle("Regression coefficient") ///
 ylabel(25.5 "Gender attitudes" 21.5 `" "Agrees that women’s most important role" "is to cook and take care of her household "'  17.5 `" "Agrees that household expenses" "are the responsibility of the husband" "'  ///
 13.25 `""Agrees that by nature men and women" "have different abilities in differenta areas" "'   9.5 `""Agrees that at work, men cope better " "with difficult conditions than women" "' 5.25 "Agency: input in productive decisions" ///

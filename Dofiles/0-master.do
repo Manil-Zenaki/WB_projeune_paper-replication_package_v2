@@ -39,6 +39,9 @@ global Dofiles_main_graphs"$maindir/Dofiles/Main/Graphs"
 global Dofiles_appendix_graphs "$maindir/Dofiles/Appendix/Graphs"
 global Dofiles_appendix_tables "$maindir/Dofiles/Appendix/Tables"
 
+global Dofiles_slides_graphs "$maindir/Dofiles/Slides/Graphs"
+global Dofiles_slides_tables "$maindir/Dofiles/Slides/Tables"
+
   
 global Output "$maindir/Outputs"
 global Table_main "$Output/Main/Tables"
@@ -128,6 +131,20 @@ do "$Dofiles_main_graphs/20-Figure_8_gender_attitudes.do"
 
 * Figures
 do "$Dofiles_appendix_graphs/21-Appendix_Figure_A1.do"
+
+*Tables
 do "$Dofiles_appendix_tables/Variable_selection.do"
+do "$Dofiles_appendix_tables/Graphs_to_tables.do"
+do "$Dofiles_appendix_tables/22-Table_B_2_3_all_variables_simultaneously_lasso.do"
+
+**************
+** SLIDES ****
+**************
+* Figures
+do "$Dofiles_slides_graphs/Training_tracks_pie_chart.do"
+
+*Tables
+do "$Dofiles_slides_tables/descriptive_stats_sociodemo_educ_training.do"
+do "$Dofiles_slides_tables/descriptive_stats_work_network_rm_ga_agency.do"
 
 log close
