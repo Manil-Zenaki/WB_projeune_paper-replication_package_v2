@@ -68,7 +68,7 @@ local packages = 0 // set to 1 to install required packages
 
 set scheme white_tableau
 
-*log using $maindir/logfile, replace
+log using $maindir/logfile, replace
 
 set seed 1947 
 
@@ -87,16 +87,21 @@ do "$Dofiles_main_cleaning/3-ENV_training_sector_classification.do"
 
 do "$Dofiles_main_cleaning/4-appending.do"
 do "$Dofiles_main_cleaning/5-variables_creation.do"
-do "$Dofiles_main_cleaning/6-labeling.do"
-do "$Dofiles_main_cleaning/7-cleaning.do"
+do "$Dofiles_main_cleaning/6-renaming.do"
+
+do "$Dofiles_main_cleaning/8-cleaning.do"
+
 
 
 
 **********************************************
 ***III. VARIABLES & DESCRIPTIVE STATISTICS  **
 **********************************************
-do "$Dofiles_main_tables/8-Table_4_variables_in_analysis.do"
-do "$Dofiles_main_tables/9-Table_5_descriptive_stats.do"
+do "$Dofiles_main_graphs/9-Figure_1_training_tracks_pie_chart.do"
+
+do "$Dofiles_main_tables/10-Table_2_variables_in_analysis.do"
+
+do "$Dofiles_main_tables/11-Table_3_descriptive_stats.do"
 
 
 ***********************
@@ -104,12 +109,8 @@ do "$Dofiles_main_tables/9-Table_5_descriptive_stats.do"
 ***********************
 
 * Tables 
-do "$Dofiles_main_tables/10-Table_1_male_dominated_working_sectors.do"
-do "$Dofiles_main_tables/11-Table_2_male_dominated_training_sectors.do"
-do "$Dofiles_main_tables/12-Table_3_MDS_robustness_check.do"
-
-
-do "$Dofiles_main_tables/13-Table_6_7_all_variables_simultaneously_theory.do"
+do "$Dofiles_main_tables/12-Table_1_male_dominated_working_sectors.do"
+do "$Dofiles_main_tables/13-Table_4_5_all_variables_simultaneously_theory.do"
 
 
 * Figures
@@ -132,19 +133,13 @@ do "$Dofiles_main_graphs/20-Figure_8_gender_attitudes.do"
 * Figures
 do "$Dofiles_appendix_graphs/21-Appendix_Figure_A1.do"
 
-*Tables
-do "$Dofiles_appendix_tables/Variable_selection.do"
-do "$Dofiles_appendix_tables/Graphs_to_tables.do"
-do "$Dofiles_appendix_tables/22-Table_B_2_3_all_variables_simultaneously_lasso.do"
-
-**************
-** SLIDES ****
-**************
-* Figures
-do "$Dofiles_slides_graphs/Training_tracks_pie_chart.do"
 
 *Tables
-do "$Dofiles_slides_tables/descriptive_stats_sociodemo_educ_training.do"
-do "$Dofiles_slides_tables/descriptive_stats_work_network_rm_ga_agency.do"
+do "$Dofiles_appendix_tables/22-Table_A1_MDS_robustness_check.do"
+do "$Dofiles_appendix_tables/24-Table_B1_Variable_selection.do"
+do "$Dofiles_appendix_tables/25-Table_C1_isolated_factors.do"
+do "$Dofiles_appendix_tables/26-Table_D1_role_models_characteristics"
+
+
 
 log close

@@ -138,7 +138,7 @@ title("Education and Training") ///
 ytitle("") xtitle("Regression coefficient") ///
 ylabel(none, notick labsize(small) angle(horizontal) nogrid) ///
 ylabel(0.25 "Proportion of contacts working in Energy or ICT", add custom labcolor(white)) /// styling trick
-ylabel(5.25 "Years of education" 3.25 "Any training" 1.25 "Training EICT" , add ) ///
+ylabel(5.25 "Years of education" 3.25 "Received any training in the past" 1.25 "Received training in EICT in the past" , add ) ///
 yline(5.25 3.25 1.25 , lstyle(grid)) ///
 legend( order (1 "Male" 2 "Female" 3 "90% CI" 4 "90% CI") /// 
 pos(6) row(1)) ///

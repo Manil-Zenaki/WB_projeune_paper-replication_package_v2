@@ -31,7 +31,7 @@ local CI_90 = 0.05
 
 * labels 
 local var_label "Has a professional Network" "Network size" ///
-"Proportion of Males in the network"
+"Proportion of males in the network"
 
 
 ******************************************************************
@@ -149,8 +149,8 @@ title("Network") ///
 ytitle("") xtitle("Regression coefficient") ///
 ylabel(none, notick labsize(small) angle(horizontal) nogrid) ///
 ylabel(0.25 "Proportion of contacts working in Energy or ICT", add custom labcolor(white)) /// styling trick
-ylabel(5.25 "Has a professional Network" 3.25 "Network size" ///
-1.25 "Proportion of Males in the network" , add) ///
+ylabel(5.25 "Has a professional network" 3.25 "Network size" ///
+1.25 "Proportion of males in the network" , add) ///
 yline(5.25 3.25 1.25 , lstyle(grid)) ///
 legend(label(1 "Male") label(2 "Female") label(3 "90% CI") label(4 "90% CI") /// 
 pos(6) row(1)) ///

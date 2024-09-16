@@ -576,18 +576,23 @@ strpos(as4_1_lien_oth, "amie") | strpos(as4_1_lien_oth,"Amis") | ///
 "LE FRERE DE MON AMI","LE FRERE DE MON PETIT AMI", "LE PERE D UN AMI", "MAMAN DE SON AMI", ///
  "PERE D UN AMI", "UNE AMIE A MA MERE"))
  
-gen rm_mds =. 
-gen rm_not_mds =.
-gen rm_mds_not_eict = .
-gen rm_energy_ict=.  
+
+
+
 gen rm_female=.
 gen rm_male= .   
-gen rm_mds_female=.
-gen rm_energy_ict_female=. 
-gen rm_fr= . 
-gen rm_fam= . 
-gen rm_fr_female= .
-gen rm_fam_female = .
+
+
+
+foreach var in rm_energy_ict rm_fr rm_fam rm_mds rm_not_mds rm_mds_not_eict {
+		gen `var' = . 
+
+		foreach x in male female {
+		
+		gen `var'_`x' = . 
+		}
+	}
+
 
 gen rm_mds_fr= .
 gen rm_mds_fam = .
@@ -645,18 +650,22 @@ replace rm_oppositesex = 1 if (rm_male ==1 & gender ==1) | (rm_female==1 & gende
 
 *
 
-foreach x in fr fam mds not_mds  {
-	
-gen rm_female_`x' = .
-replace rm_female_`x' = 0 if rm_female == 0 | rm_`x'== 0 
-replace rm_female_`x'  = 1 if rm_female == 1 & rm_`x'== 1 	
+foreach var in fr fam mds not_mds  {
+	foreach x in male female {
+		replace rm_`var'_`x' = 0 if rm_`x' == 0 | rm_`var'== 0 
+		replace rm_`var'_`x' = 1 if rm_`x' == 1 & rm_`var'== 1 
+
+	}
 }
 
-gen rm_female_eict = .
-replace rm_female_eict = 0 if rm_female == 0 | rm_energy_ict== 0 
-replace rm_female_eict  = 1 if rm_female == 1 & rm_energy_ict== 1 	
+gen rm_eict_female = .
+replace rm_eict_female = 0 if rm_female == 0 | rm_energy_ict== 0 
+replace rm_eict_female  = 1 if rm_female == 1 & rm_energy_ict== 1 	
  
-
+gen rm_eict_male = .
+replace rm_eict_male = 0 if rm_male == 0 | rm_energy_ict== 0 
+replace rm_eict_male  = 1 if rm_male == 1 & rm_energy_ict== 1 	
+ 
  
 ** E.4 Entourage (Non-family) support ** 
 

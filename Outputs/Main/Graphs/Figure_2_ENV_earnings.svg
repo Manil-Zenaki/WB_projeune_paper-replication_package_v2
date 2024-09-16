@@ -1475,10 +1475,10 @@
 	<text x="3261.47" y="1849.12" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Construction</text>
 	<circle cx="3642.97" cy="1870.05" r="14.85" style="fill:#000000"/>
 	<circle cx="3642.97" cy="1870.05" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
-	<text x="3663.90" y="1891.06" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Security guard</text>
+	<text x="3642.97" y="1932.87" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Fishing</text>
 	<circle cx="3642.97" cy="1870.05" r="14.85" style="fill:#000000"/>
 	<circle cx="3642.97" cy="1870.05" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
-	<text x="3642.97" y="1932.87" style="font-family:'Helvetica';font-size:59.94px;fill:#000000" text-anchor="middle">Fishing</text>
+	<text x="3663.90" y="1891.06" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Security guard</text>
 	<circle cx="3612.47" cy="1756.78" r="14.85" style="fill:#000000"/>
 	<circle cx="3612.47" cy="1756.78" r="12.69" style="fill:none;stroke:#000000;stroke-width:4.32"/>
 	<text x="3633.39" y="1777.80" style="font-family:'Helvetica';font-size:59.94px;fill:#000000">Mechanics</text>

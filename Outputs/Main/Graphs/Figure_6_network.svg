@@ -794,9 +794,9 @@
 	<line x1="2897.57" y1="2398.51" x2="2897.57" y2="2353.56" stroke-linecap="round" style="stroke:#008BBC;stroke-width:10.80"/>
 	<line x1="2002.93" y1="2398.51" x2="2002.93" y2="2353.56" stroke-linecap="round" style="stroke:#008BBC;stroke-width:10.80"/>
 	<text x="4114.80" y="2736.74" style="font-family:'Helvetica';font-size:100.03px;fill:#FFFFff">Proportion of contacts working in Energy or ICT</text>
-	<text x="4114.80" y="566.85" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Has a professional Network</text>
+	<text x="4114.80" y="566.85" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Has a professional network</text>
 	<text x="4114.80" y="1434.81" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Network size</text>
-	<text x="4114.80" y="2302.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Proportion of Males in the network</text>
+	<text x="4114.80" y="2302.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Proportion of males in the network</text>
 	<line x1="205.13" y1="2780.85" x2="205.13" y2="2830.87" style="stroke:#808080;stroke-width:7.20"/>
 	<text x="205.13" y="2925.71" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">-.1</text>
 	<line x1="1112.74" y1="2780.85" x2="1112.74" y2="2830.87" style="stroke:#808080;stroke-width:7.20"/>

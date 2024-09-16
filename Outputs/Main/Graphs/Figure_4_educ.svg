@@ -710,8 +710,8 @@
 	<line x1="2761.09" y1="2398.51" x2="2761.09" y2="2353.56" stroke-linecap="round" style="stroke:#008BBC;stroke-width:10.80"/>
 	<text x="4114.80" y="2736.74" style="font-family:'Helvetica';font-size:100.03px;fill:#FFFFff">Proportion of contacts working in Energy or ICT</text>
 	<text x="4114.80" y="566.85" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Years of education</text>
-	<text x="4114.80" y="1434.81" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Any training</text>
-	<text x="4114.80" y="2302.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Training EICT</text>
+	<text x="4114.80" y="1434.81" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Received any training in the past</text>
+	<text x="4114.80" y="2302.76" style="font-family:'Helvetica';font-size:100.03px;fill:#000000">Received training in EICT in the past</text>
 	<line x1="205.13" y1="2780.85" x2="205.13" y2="2830.87" style="stroke:#808080;stroke-width:7.20"/>
 	<text x="205.13" y="2925.71" style="font-family:'Helvetica';font-size:100.03px;fill:#000000" text-anchor="middle">-.4</text>
 	<line x1="1156.48" y1="2780.85" x2="1156.48" y2="2830.87" style="stroke:#808080;stroke-width:7.20"/>
